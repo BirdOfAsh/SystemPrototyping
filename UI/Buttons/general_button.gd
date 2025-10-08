@@ -1,9 +1,9 @@
 @tool class_name GeneralButton extends TextureButton
 
 signal buttonPressed()
-
+##If included, will display the selection component and play it's animation when hovering over the button
 @export var selectComponent : SelectionComponent
-
+##This button updates the pivot offset to be the center of the button
 @export_tool_button("Update Pivot Offset", "Callable") var pOffsetAction : Callable = updatePivotOffset
 
 

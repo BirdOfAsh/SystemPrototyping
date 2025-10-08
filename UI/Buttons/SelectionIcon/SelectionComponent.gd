@@ -3,6 +3,7 @@
 @export var selection_icon_left: Sprite2D
 @export var selection_icon_right: Sprite2D
 
+##Updates the offset for the icons while in the editor
 @export_range(5, 50, 5) var xOffset : int:
 	set(newXOffset):
 		xOffset = newXOffset
@@ -10,7 +11,7 @@
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-
+##If there are both selection icons, updates both offsets
 func updateOffset():
 	if selection_icon_left and selection_icon_right:
 		selection_icon_left.offset.x = -xOffset
