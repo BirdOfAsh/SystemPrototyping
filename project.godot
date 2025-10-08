@@ -11,5 +11,17 @@ config_version=5
 [application]
 
 config/name="System Prototyping"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[file_customization]
+
+folder_colors={
+"res://Components/": "gray",
+"res://Resources/": "pink",
+"res://UI/": "green"
+}
+
+[gui]
+
+common/snap_controls_to_pixels=false

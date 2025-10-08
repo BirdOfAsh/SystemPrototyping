@@ -5,6 +5,6 @@ extends Area2D
 @export var healthComponent : HealthComponent
 
 
-func callDamage(damageStat : DamageStats):
+func callDamage(damageStat : int):
 	if healthComponent:
 		healthComponent.damage(damageStat)

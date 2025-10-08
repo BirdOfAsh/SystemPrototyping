@@ -9,4 +9,4 @@ func _on_area_entered(area: Area2D) -> void:
 	if area is not HitboxComponent or !damageStat:
 		return
 	
-	(area as HitboxComponent).callDamage(damageStat)
+	(area as HitboxComponent).callDamage(damageStat.getDamageAmount())

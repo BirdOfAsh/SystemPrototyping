@@ -6,5 +6,7 @@ extends Node
 @onready var currentHealth : int = maxHealth
 
 
-func damage(damageStat : DamageStats) -> void:
-	currentHealth = clampi(currentHealth - damageStat.getDamageAmount(), 0, maxHealth)
+func damage(damageStat : int) -> void:
+	currentHealth = clampi(currentHealth - damageStat, 0, maxHealth)
+	if currentHealth == 0:
+		get_parent().queue_free()
