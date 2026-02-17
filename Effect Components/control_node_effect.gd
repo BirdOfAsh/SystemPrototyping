@@ -1,25 +1,70 @@
 class_name ControlNodeEffect extends TweenEffect
 ## [ControlNodeEffect] is an extension of [TweenEffect] and additionally contains
-## position, rotation, and scale parameters, while also taking into account the 
-## pivot position.
+## transform and [CanvasItem] parameters.
 
 ## The node which will have the effect applied.
-@export var affected_node : Control
+@export var affected_node : Node2D
+
+## Determines if the effect will loop while playing.
+@export var loop : bool = false
+
+## Starts the effect upon the node becoming ready
+@export var autostart : bool = false
+
+#region Transform Properties
+@export_category("Transform Properties")
+
+@export_group("Position")
+## The position the tween will start at. [br]
+## Has INF values by default, and will ignore individual x or y if left unchanged.
+@export var start_position : Vector2 = Vector2.INF
 
 ## The position the tween will end at. [br]
-## Has INF values by default, and will ignore individual x or y if left unchanged
-@export var position_amount : Vector2 = Vector2.INF
+## Has INF values by default, and will ignore individual x or y if left unchanged.
+@export var end_position : Vector2 = Vector2.INF
+
+@export_group("Rotation")
+
+## The rotation amount is the rotation degrees the tween will start at. [br]
+## Has INF value by default, and will ignore this parameter if unchanged.
+@export var start_rotation : float = INF
+
 ## The rotation amount is the rotation degrees the tween will end at. [br]
 ## Has INF value by default, and will ignore this parameter if unchanged.
-@export var rotation_amount : float = INF
+@export var end_rotation : float = INF
+
+@export_group("Scale")
+
+## The scale amount is the scale the tween will start at. [br]
+## Has INF values by default, and will ignore individual x or y if left unchanged.
+@export var start_scale : Vector2 = Vector2.INF
+
 ## The scale amount is the scale the tween will end at. [br]
-## Has INF values by default, and will ignore individual x or y if left unchanged
-@export var scale_amount : Vector2 = Vector2.INF
+## Has INF values by default, and will ignore individual x or y if left unchanged.
+@export var end_scale : Vector2 = Vector2.INF
+#endregion
+
+#region CanvasItem Properties
+@export_category("CanvasItem Properties")
+@export_group("Visibility")
+
+## The modulate the node will start at, if WHITE then will set to default. [br]
+## If both modulate are the same, the tween will ignore modulation
+@export var start_modulate : Color = Color.WHITE
+
+## The modulate the node will end at, if WHITE then will set to default. [br]
+## If both modulate are the same, the tween will ignore modulation
+@export var end_modulate : Color = Color.WHITE
+
+#endregion
 
 
 func _ready() -> void:
 	if !affected_node:
 		return
+	
+	if autostart:
+		do_tween()
 	# Sets the pivot offset to be the center of the control node
 	affected_node.pivot_offset_ratio = Vector2(0.5, 0.5)
 
@@ -33,36 +78,125 @@ func do_tween() -> void:
 	# Create a new tween with given parameters
 	reset_tween()
 	
+	# Set to infinitely loop 
+	if loop:
+		tween.set_loops()
+	
 	# Tween the positions if not default
-	if position_amount.x != INF:
-		tween.tween_property(affected_node, "position:x", position_amount.x, tween_duration)
-	if position_amount.y != INF:
-		tween.tween_property(affected_node, "position:y", position_amount.y, tween_duration)
+	tween.tween_property(
+		affected_node,
+		"position:x",
+		end_position.x if end_position.x != INF else affected_node.position.x,
+		tween_duration
+		).from(
+			start_position.x if start_position.x != INF else affected_node.position.x
+			)
+	tween.tween_property(
+		affected_node,
+		"position:y",
+		end_position.y if end_position.y != INF else affected_node.position.y,
+		tween_duration
+		).from(
+			start_position.y if start_position.y != INF else affected_node.position.y
+			)
 	
 	# Tween the rotation if not default
-	if rotation_amount != INF:
-		tween.tween_property(affected_node, "rotation_degrees", rotation_amount, tween_duration)
+	tween.tween_property(
+		affected_node,
+		"rotation_degrees",
+		end_rotation if end_rotation != INF else affected_node.rotation_degrees,
+		tween_duration
+		).from(
+			start_rotation if start_rotation != INF else affected_node.rotation_degrees
+			)
 	
-	#Tween the scale if not default
-	if scale_amount.x != INF:
-		tween.tween_property(affected_node, "scale:x", scale_amount.x, tween_duration)
-	if scale_amount.y != INF:
-		tween.tween_property(affected_node, "scale:y", scale_amount.y, tween_duration)
+	# Tween the scale if not default
+	tween.tween_property(
+		affected_node,
+		"scale:x",
+		end_scale.x if end_scale.x != INF else affected_node.scale.x,
+		tween_duration
+		).from(
+			start_scale.x if start_scale.x != INF else affected_node.scale.x
+			)
+	tween.tween_property(
+		affected_node,
+		"scale:y",
+		end_scale.y if end_scale.y != INF else affected_node.scale.y,
+		tween_duration
+		).from(
+			start_scale.y if start_scale.y != INF else affected_node.scale.y
+			)
+	
+	# Tween modulate if start_modulate and end_modulate are not the smae
+	if start_modulate != end_modulate:
+		tween.tween_property(
+			affected_node,
+			"modulate",
+			end_modulate,
+			tween_duration
+		).from(
+			start_modulate
+		)
+	
+	if loop:
+		tween.chain()
 		
-
-
-## Takes in a [param start_position], [param start_rotation], and [param start_scale]
-## which will be set as startings value before the tween. [br]
-## If left unchanged will default to current values in node.
-func do_tween_from_values(
-		start_position : Vector2 = affected_node.position,
-		start_rotation : float = affected_node.rotation_degrees,
-		start_scale : Vector2 = affected_node.scale
-	) -> void:
+		# Tween the positions if not default
+		tween.tween_property(
+			affected_node,
+			"position:x",
+			start_position.x if start_position.x != INF else affected_node.position.x,
+			tween_duration
+			).from(
+				end_position.x if end_position.x != INF else affected_node.position.x
+				)
+		tween.tween_property(
+			affected_node,
+			"position:y",
+			start_position.y if start_position.y != INF else affected_node.position.y,
+			tween_duration
+			).from(
+				end_position.y if end_position.y != INF else affected_node.position.y
+				)
+		
+		# Tween the rotation if not default
+		tween.tween_property(
+			affected_node,
+			"rotation_degrees",
+			start_rotation if start_rotation != INF else affected_node.rotation_degrees,
+			tween_duration
+			).from(
+				end_rotation if end_rotation != INF else affected_node.rotation_degrees
+				)
+		
+		# Tween the scale if not default
+		tween.tween_property(
+			affected_node,
+			"scale:x",
+			start_scale.x if start_scale.x != INF else affected_node.scale.x,
+			tween_duration
+			).from(
+				end_scale.x if end_scale.x != INF else affected_node.scale.x
+				)
+		tween.tween_property(
+			affected_node,
+			"scale:y",
+			start_scale.y if start_scale.y != INF else affected_node.scale.y,
+			tween_duration
+			).from(
+				end_scale.y if end_scale.y != INF else affected_node.scale.y
+				)
+		
+		# Tween modulate if start_modulate and end_modulate are not the smae
+		if start_modulate != end_modulate:
+			tween.tween_property(
+				affected_node,
+				"modulate",
+				start_modulate,
+				tween_duration
+			).from(
+				end_modulate
+			)
 	
-	affected_node.position = start_position
-	affected_node.rotation_degrees = start_rotation
-	affected_node.scale = start_scale
-	
-	do_tween()
-	
+	await tween.finished
