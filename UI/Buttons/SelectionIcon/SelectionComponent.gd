@@ -9,7 +9,7 @@
 		xOffset = newXOffset
 		updateOffset()
 
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer as AnimationPlayer
 
 ##If there are both selection icons, updates both offsets
 func updateOffset():
@@ -26,3 +26,6 @@ func playAnim():
 func stopAnim():
 	animation_player.stop()
 	hide()
+
+
+var unsafe_var 
