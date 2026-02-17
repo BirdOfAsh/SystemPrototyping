@@ -23,6 +23,7 @@ config/icon="res://icon.svg"
 folder_colors={
 "res://Components/": "gray",
 "res://Effect Components/": "teal",
+"res://Effect Components/Assets/": "purple",
 "res://Resources/": "pink",
 "res://UI/": "green"
 }

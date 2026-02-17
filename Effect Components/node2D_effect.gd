@@ -1,3 +1,4 @@
+@icon("uid://mc5sx2ggbl4q")
 class_name Node2DEffect extends TweenEffect
 ## [Node2DEffect] is an extension of [TweenEffect] and additionally contains
 ## transform and [CanvasItem] parameters.
