@@ -1,10 +1,9 @@
-class_name Node2DEffectSequencer extends Node
-## The purpose of [Node2DEffectSequencer] is to hold and call a series of [Node2DEffect]
+class_name ControlNodeEffectSequencer extends Node
+## The purpose of [ControlNodeEffectSequencer] is to hold and call a series of [ControlNodeEffect]
 ## in sequence, to allow for the more complex tween animation.
 
 ## The node which was have a sequence of effects applied
 @export var affected_node : Node2D
-
 
 ## Determines if the array of effects will loop once completed
 @export var loop : bool = false
@@ -12,8 +11,8 @@ class_name Node2DEffectSequencer extends Node
 ## Starts the array of effects upon all nodes becoming ready
 @export var autostart : bool = false
 
-
-@export var effect_array : Array[Node2DEffect]
+## Array of held [ControlNodeEffect]
+@export var effect_array : Array[ControlNodeEffect]
 
 
 func _ready() -> void:
@@ -26,14 +25,14 @@ func _ready() -> void:
 	
 
 
-## Calls the do_effect of every [Node2DEffect] in sequence
+## Calls the do_effect of every [ControlNodeEffect] in sequence
 func do_effect_sequence() -> void:
 	# Check if there is a node to affect
 	if !affected_node:
 		printerr(self, "There was no node to apply effects to!")
 		return
 	
-	for effect : Node2DEffect in effect_array:
+	for effect : ControlNodeEffect in effect_array:
 		effect.affected_node = affected_node
 		
 		# Disable loop for all effects
@@ -53,7 +52,7 @@ func do_effect_sequence() -> void:
 	if loop:
 		effect_array.reverse()
 		
-		for effect : Node2DEffect in effect_array:
+		for effect : ControlNodeEffect in effect_array:
 			effect.do_tween_backward()
 			await effect.tween.finished
 		
@@ -63,5 +62,5 @@ func do_effect_sequence() -> void:
 
 ## Stops the sequence by killing every tween in the array of [member effect_array]
 func stop_sequence() -> void:
-	for effect : Node2DEffect in effect_array:
+	for effect : ControlNodeEffect in effect_array:
 		effect.stop_tween()

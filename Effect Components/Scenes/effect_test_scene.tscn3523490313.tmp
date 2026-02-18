@@ -49,7 +49,6 @@ start_position = Vector2(300, -200)
 end_position = Vector2(-300, 200)
 start_rotation = 90.0
 end_rotation = -90.0
-loop = true
 trans_type = 7
 ease_type = 2
 tween_duration = 1.2

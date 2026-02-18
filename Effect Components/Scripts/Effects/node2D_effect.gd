@@ -75,7 +75,6 @@ func do_tween() -> void:
 	# Set to infinitely loop 
 	if loop:
 		tween.set_loops()
-	
 	# Tween the positions if not default
 	tween.tween_property(
 		affected_node,
@@ -134,7 +133,7 @@ func do_tween() -> void:
 		)
 	
 	if loop:
-		tween.chain()
+		#tween.chain()
 		
 		do_tween_backward()
 	
@@ -143,10 +142,13 @@ func do_tween() -> void:
 ## Execute the do_tween function with start and end values reversed, meant to be used
 ## for looping. [br]
 ## Not meant to be used alone.
-func do_tween_backward() -> void:
-	reset_tween()
+func do_tween_backward(reset : bool = false) -> void:
+	# Reset if run only if the do_backwards is run alone
+	if reset:
+		reset_tween()
+
 	# Tween the positions if not default
-	tween.tween_property(
+	tween.chain().tween_property(
 		affected_node,
 		"position:x",
 		start_position.x if start_position.x != INF else affected_node.position.x,

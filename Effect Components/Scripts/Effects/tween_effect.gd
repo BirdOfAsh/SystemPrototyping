@@ -30,8 +30,12 @@ func reset_tween() -> void:
 	# If there is a current tween, abort it
 	if tween:
 		tween.kill()
-	# Create the tween with the [membet ease_type], [member trans_type] and
-	# allow for tweening to be done simultaneously
+	# Setup the new tween
+	setup_tween()
+
+## Creates the tween with the [member ease_type], [member trans_type] and
+## allow for tweening to be done simultaneously
+func setup_tween() -> void:
 	tween = create_tween().set_ease(ease_type).set_trans(trans_type).set_parallel(true)
 
 
