@@ -24,7 +24,8 @@ folder_colors={
 "res://Components/": "gray",
 "res://Effect Components/": "teal",
 "res://Effect Components/Assets/": "purple",
-"res://Resources/": "pink",
+"res://Effect Components/Scenes/": "blue",
+"res://Effect Components/Scripts/": "yellow",
 "res://UI/": "green"
 }
 

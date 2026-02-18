@@ -4,6 +4,15 @@
 ## This class contains all of the information relating to the tween including
 ## transitions, easing, and the tween's duration.
 
+
+@export_category("Universal Parameters")
+## Determines if the effect will loop while playing.
+@export var loop : bool = false
+
+## Starts the effect upon the node becoming ready
+@export var autostart : bool = false
+
+@export_category("Transition Parameters")
 ## Type of [TransitionType] of the tween.
 @export var trans_type : Tween.TransitionType
 ## Type of [EaseType] of the tween.

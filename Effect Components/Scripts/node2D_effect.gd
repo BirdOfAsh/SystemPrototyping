@@ -6,11 +6,6 @@ class_name Node2DEffect extends TweenEffect
 ## The node which will have the effect applied.
 @export var affected_node : Node2D
 
-## Determines if the effect will loop while playing.
-@export var loop : bool = false
-
-## Starts the effect upon the node becoming ready
-@export var autostart : bool = false
 
 #region Transform Properties
 @export_category("Transform Properties")
@@ -137,61 +132,68 @@ func do_tween() -> void:
 	if loop:
 		tween.chain()
 		
-		# Tween the positions if not default
-		tween.tween_property(
-			affected_node,
-			"position:x",
-			start_position.x if start_position.x != INF else affected_node.position.x,
-			tween_duration
-			).from(
-				end_position.x if end_position.x != INF else affected_node.position.x
-				)
-		tween.tween_property(
-			affected_node,
-			"position:y",
-			start_position.y if start_position.y != INF else affected_node.position.y,
-			tween_duration
-			).from(
-				end_position.y if end_position.y != INF else affected_node.position.y
-				)
-		
-		# Tween the rotation if not default
-		tween.tween_property(
-			affected_node,
-			"rotation_degrees",
-			start_rotation if start_rotation != INF else affected_node.rotation_degrees,
-			tween_duration
-			).from(
-				end_rotation if end_rotation != INF else affected_node.rotation_degrees
-				)
-		
-		# Tween the scale if not default
-		tween.tween_property(
-			affected_node,
-			"scale:x",
-			start_scale.x if start_scale.x != INF else affected_node.scale.x,
-			tween_duration
-			).from(
-				end_scale.x if end_scale.x != INF else affected_node.scale.x
-				)
-		tween.tween_property(
-			affected_node,
-			"scale:y",
-			start_scale.y if start_scale.y != INF else affected_node.scale.y,
-			tween_duration
-			).from(
-				end_scale.y if end_scale.y != INF else affected_node.scale.y
-				)
-		
-		# Tween modulate if start_modulate and end_modulate are not the smae
-		if start_modulate != end_modulate:
-			tween.tween_property(
-				affected_node,
-				"modulate",
-				start_modulate,
-				tween_duration
-			).from(
-				end_modulate
-			)
+		do_tween_backward()
 	
 	await tween.finished
+
+## Execute the do_tween function with start and end values reversed, meant to be used
+## for looping. [br]
+## Not meant to be used alone.
+func do_tween_backward() -> void:
+	reset_tween()
+	# Tween the positions if not default
+	tween.tween_property(
+		affected_node,
+		"position:x",
+		start_position.x if start_position.x != INF else affected_node.position.x,
+		tween_duration
+		).from(
+			end_position.x if end_position.x != INF else affected_node.position.x
+			)
+	tween.tween_property(
+		affected_node,
+		"position:y",
+		start_position.y if start_position.y != INF else affected_node.position.y,
+		tween_duration
+		).from(
+			end_position.y if end_position.y != INF else affected_node.position.y
+			)
+	
+	# Tween the rotation if not default
+	tween.tween_property(
+		affected_node,
+		"rotation_degrees",
+		start_rotation if start_rotation != INF else affected_node.rotation_degrees,
+		tween_duration
+		).from(
+			end_rotation if end_rotation != INF else affected_node.rotation_degrees
+			)
+	
+	# Tween the scale if not default
+	tween.tween_property(
+		affected_node,
+		"scale:x",
+		start_scale.x if start_scale.x != INF else affected_node.scale.x,
+		tween_duration
+		).from(
+			end_scale.x if end_scale.x != INF else affected_node.scale.x
+			)
+	tween.tween_property(
+		affected_node,
+		"scale:y",
+		start_scale.y if start_scale.y != INF else affected_node.scale.y,
+		tween_duration
+		).from(
+			end_scale.y if end_scale.y != INF else affected_node.scale.y
+			)
+	
+	# Tween modulate if start_modulate and end_modulate are not the smae
+	if start_modulate != end_modulate:
+		tween.tween_property(
+			affected_node,
+			"modulate",
+			start_modulate,
+			tween_duration
+		).from(
+			end_modulate
+		)

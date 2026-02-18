@@ -5,11 +5,6 @@ class_name ControlNodeEffect extends TweenEffect
 ## The node which will have the effect applied.
 @export var affected_node : Node2D
 
-## Determines if the effect will loop while playing.
-@export var loop : bool = false
-
-## Starts the effect upon the node becoming ready
-@export var autostart : bool = false
 
 #region Transform Properties
 @export_category("Transform Properties")
