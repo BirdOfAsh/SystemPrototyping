@@ -145,8 +145,10 @@ func do_tween() -> void:
 ## Execute the do_tween function with start and end values reversed, meant to be used
 ## for looping. [br]
 ## Not meant to be used alone.
-func do_tween_backward() -> void:
-	reset_tween()
+func do_tween_backward(reset : bool = false) -> void:
+	# Reset if run only if the do_backwards is run alone
+	if reset:
+		reset_tween()
 	# Tween the positions if not default
 	tween.tween_property(
 		affected_node,
