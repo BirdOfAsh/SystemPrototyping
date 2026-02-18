@@ -56,6 +56,10 @@ class_name Node2DEffect extends TweenEffect
 
 
 func _ready() -> void:
+	# Check if there is a node
+	if !affected_node:
+		return
+	# Start effect if autostart is enabled
 	if autostart:
 		do_tween()
 
