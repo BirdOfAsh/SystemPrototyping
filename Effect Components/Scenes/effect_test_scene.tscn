@@ -51,7 +51,6 @@ start_position = Vector2(300, -200)
 end_position = Vector2(-300, 200)
 start_rotation = 90.0
 end_rotation = -90.0
-loop = true
 trans_type = 7
 ease_type = 2
 tween_duration = 1.2
@@ -80,17 +79,26 @@ offset_right = 64.0
 offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(2, 2)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture_normal = ExtResource("2_p3a1m")
 
-[node name="ButtonEffectHover" type="Node" parent="TextureButton" unique_id=1449028917 node_paths=PackedStringArray("affected_node")]
+[node name="ButtonEffect2" type="Node" parent="TextureButton" unique_id=1449028917 node_paths=PackedStringArray("affected_node")]
 script = ExtResource("4_xb61r")
 button_effect_type = 4
 affected_node = NodePath("..")
-start_scale = Vector2(2, 2)
-end_scale = Vector2(1, 1)
+start_scale = Vector2(1, 1)
+end_scale = Vector2(1.5, 1.5)
 trans_type = 9
 ease_type = 2
 tween_duration = 0.1
+metadata/_custom_type_script = "uid://mbemlabsnfms"
+
+[node name="ButtonEffect" type="Node" parent="TextureButton" unique_id=645877214 node_paths=PackedStringArray("affected_node")]
+script = ExtResource("4_xb61r")
+affected_node = NodePath("..")
+start_rotation = 5.0
+end_rotation = -5.0
+loop = true
+trans_type = 6
+ease_type = 2
 metadata/_custom_type_script = "uid://mbemlabsnfms"
