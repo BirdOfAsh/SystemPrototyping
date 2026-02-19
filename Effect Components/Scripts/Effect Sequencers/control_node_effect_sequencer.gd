@@ -3,7 +3,7 @@ class_name ControlNodeEffectSequencer extends Node
 ## in sequence, to allow for the more complex tween animation.
 
 ## The node which was have a sequence of effects applied
-@export var affected_node : Node2D
+@export var affected_node : Control
 
 ## Determines if the array of effects will loop once completed
 @export var loop : bool = false

@@ -4,7 +4,7 @@ class_name ControlNodeEffect extends TweenEffect
 ## transform and [CanvasItem] parameters.
 
 ## The node which will have the effect applied.
-@export var affected_node : Node2D
+@export var affected_node : Control
 
 
 #region Transform Properties

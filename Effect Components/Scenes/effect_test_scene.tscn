@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cv1tqomq6d35i" path="res://Effect Components/Scripts/Effects/node2D_effect.gd" id="1_25cbn"]
 [ext_resource type="Texture2D" uid="uid://dmq8bdbng4qog" path="res://icon.svg" id="2_p3a1m"]
 [ext_resource type="Script" uid="uid://dtxea7wlkf3vx" path="res://Effect Components/Scripts/Effect Sequencers/node2D_effect_sequencer.gd" id="3_en1hb"]
+[ext_resource type="Script" uid="uid://mbemlabsnfms" path="res://Effect Components/Scripts/Effects/button_effect.gd" id="4_xb61r"]
 
 [node name="EffectTestScene" type="Node" unique_id=1437132771]
 
@@ -21,6 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Control" unique_id=738079858]
+visible = false
 texture = ExtResource("2_p3a1m")
 
 [node name="EffectSequencer" type="Node" parent="Control/Sprite2D" unique_id=810145370 node_paths=PackedStringArray("affected_node", "effect_array")]
@@ -65,3 +67,30 @@ trans_type = 7
 ease_type = 2
 tween_duration = 1.2
 metadata/_custom_type_script = "uid://cv1tqomq6d35i"
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=1201956925]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("2_p3a1m")
+
+[node name="ButtonEffectHover" type="Node" parent="TextureButton" unique_id=1449028917 node_paths=PackedStringArray("affected_node")]
+script = ExtResource("4_xb61r")
+button_effect_type = 4
+affected_node = NodePath("..")
+start_scale = Vector2(2, 2)
+end_scale = Vector2(1, 1)
+trans_type = 9
+ease_type = 2
+tween_duration = 0.1
+metadata/_custom_type_script = "uid://mbemlabsnfms"
