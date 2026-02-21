@@ -29,3 +29,10 @@ func set_original_values() -> void:
 	original_position = affected_node.position
 	original_rotation = affected_node.rotation
 	original_scale = affected_node.scale
+
+
+## Sets the current transform values to the [member affected_node]
+func set_current_values() -> void:
+	current_position = affected_node.position
+	current_rotation = affected_node.rotation
+	current_scale = affected_node.scale

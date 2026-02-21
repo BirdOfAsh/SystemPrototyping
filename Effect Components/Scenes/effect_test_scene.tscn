@@ -63,15 +63,16 @@ affected_node = NodePath("..")
 end_scale = Vector2(1.1, 1.1)
 trans_type = 10
 ease_type = 2
-tween_duration = 0.1
+tween_duration = 0.2
 metadata/_custom_type_script = "uid://mbemlabsnfms"
 
-[node name="ButtonEffect4" type="Node" parent="Control/TextureButton" unique_id=333794828 node_paths=PackedStringArray("affected_node")]
+[node name="ButtonEffect4" type="Node" parent="Control/TextureButton" unique_id=1114745366 node_paths=PackedStringArray("affected_node")]
 script = ExtResource("2_en1hb")
 button_effect_type = 2
 affected_node = NodePath("..")
+start_scale = Vector2(1.1, 1.1)
 end_scale = Vector2(1, 1)
 trans_type = 10
 ease_type = 2
-tween_duration = 0.1
+tween_duration = 0.2
 metadata/_custom_type_script = "uid://mbemlabsnfms"

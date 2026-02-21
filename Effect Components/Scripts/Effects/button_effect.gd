@@ -37,3 +37,5 @@ func setup_button_signal() -> void:
 			(affected_node as BaseButton).button_up.connect(do_tween_backward.bind(true))
 		5:
 			(affected_node as BaseButton).button_down.connect(do_tween)
+		6:
+			(affected_node as BaseButton).button_up.connect(do_tween)
