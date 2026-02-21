@@ -1,9 +1,8 @@
 [gd_scene format=3 uid="uid://cqknxiwwqry2u"]
 
 [ext_resource type="Script" uid="uid://cv1tqomq6d35i" path="res://Effect Components/Scripts/Effects/node2D_effect.gd" id="1_25cbn"]
+[ext_resource type="Script" uid="uid://dtxea7wlkf3vx" path="res://Effect Components/Scripts/Effect Sequencers/node2D_effect_sequencer.gd" id="2_en1hb"]
 [ext_resource type="Texture2D" uid="uid://dmq8bdbng4qog" path="res://icon.svg" id="2_p3a1m"]
-[ext_resource type="Script" uid="uid://dtxea7wlkf3vx" path="res://Effect Components/Scripts/Effect Sequencers/node2D_effect_sequencer.gd" id="3_en1hb"]
-[ext_resource type="Script" uid="uid://mbemlabsnfms" path="res://Effect Components/Scripts/Effects/button_effect.gd" id="4_xb61r"]
 
 [node name="EffectTestScene" type="Node" unique_id=1437132771]
 
@@ -22,83 +21,63 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Control" unique_id=738079858]
-visible = false
 texture = ExtResource("2_p3a1m")
 
-[node name="EffectSequencer" type="Node" parent="Control/Sprite2D" unique_id=810145370 node_paths=PackedStringArray("affected_node", "effect_array")]
-script = ExtResource("3_en1hb")
+[node name="Node2DEffectSequencer" type="Node" parent="Control/Sprite2D" unique_id=533823790 node_paths=PackedStringArray("affected_node", "effect_array")]
+script = ExtResource("2_en1hb")
 affected_node = NodePath("..")
 loop = true
 autostart = true
-effect_array = [NodePath("Effect1"), NodePath("Effect2"), NodePath("Effect3")]
+effect_array = [NodePath("Node2DEffect"), NodePath("Node2DEffect2"), NodePath("Node2DEffect3"), NodePath("Node2DEffect4")]
 metadata/_custom_type_script = "uid://dtxea7wlkf3vx"
 
-[node name="Effect1" type="Node" parent="Control/Sprite2D/EffectSequencer" unique_id=770835643 node_paths=PackedStringArray("affected_node")]
+[node name="Node2DEffect" type="Node" parent="Control/Sprite2D/Node2DEffectSequencer" unique_id=343549797 node_paths=PackedStringArray("affected_node")]
 script = ExtResource("1_25cbn")
 affected_node = NodePath("../..")
-start_position = Vector2(-300, -200)
-end_position = Vector2(300, -200)
+start_position = Vector2(-200, 0)
+end_position = Vector2(0, 200)
 start_rotation = 0.0
-end_rotation = 90.0
-trans_type = 7
+end_rotation = 15.0
+start_scale = Vector2(2, 2)
+end_scale = Vector2(1, 1)
+trans_type = 8
 ease_type = 2
-tween_duration = 1.2
 metadata/_custom_type_script = "uid://cv1tqomq6d35i"
 
-[node name="Effect2" type="Node" parent="Control/Sprite2D/EffectSequencer" unique_id=618563170]
+[node name="Node2DEffect2" type="Node" parent="Control/Sprite2D/Node2DEffectSequencer" unique_id=155416588]
 script = ExtResource("1_25cbn")
-start_position = Vector2(300, -200)
-end_position = Vector2(-300, 200)
-start_rotation = 90.0
-end_rotation = -90.0
-trans_type = 7
-ease_type = 2
-tween_duration = 1.2
-metadata/_custom_type_script = "uid://cv1tqomq6d35i"
-
-[node name="Effect3" type="Node" parent="Control/Sprite2D/EffectSequencer" unique_id=568118017]
-script = ExtResource("1_25cbn")
-start_position = Vector2(-300, 200)
-end_position = Vector2(300, 200)
-start_rotation = -90.0
+start_position = Vector2(0, 200)
+end_position = Vector2(200, 0)
+start_rotation = 15.0
 end_rotation = 0.0
-trans_type = 7
+start_scale = Vector2(1, 1)
+end_scale = Vector2(2, 2)
+trans_type = 8
 ease_type = 2
-tween_duration = 1.2
 metadata/_custom_type_script = "uid://cv1tqomq6d35i"
 
-[node name="TextureButton" type="TextureButton" parent="." unique_id=1201956925]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -64.0
-offset_right = 64.0
-offset_bottom = 64.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture_normal = ExtResource("2_p3a1m")
+[node name="Node2DEffect3" type="Node" parent="Control/Sprite2D/Node2DEffectSequencer" unique_id=1957926694 node_paths=PackedStringArray("affected_node")]
+script = ExtResource("1_25cbn")
+affected_node = NodePath("../..")
+start_position = Vector2(200, 0)
+end_position = Vector2(0, -200)
+start_rotation = 0.0
+end_rotation = -15.0
+start_scale = Vector2(2, 2)
+end_scale = Vector2(1, 1)
+trans_type = 8
+ease_type = 2
+metadata/_custom_type_script = "uid://cv1tqomq6d35i"
 
-[node name="ButtonEffect2" type="Node" parent="TextureButton" unique_id=1449028917 node_paths=PackedStringArray("affected_node")]
-script = ExtResource("4_xb61r")
-button_effect_type = 4
-affected_node = NodePath("..")
+[node name="Node2DEffect4" type="Node" parent="Control/Sprite2D/Node2DEffectSequencer" unique_id=538167413 node_paths=PackedStringArray("affected_node")]
+script = ExtResource("1_25cbn")
+affected_node = NodePath("../..")
+start_position = Vector2(0, -200)
+end_position = Vector2(-200, 0)
+start_rotation = -15.0
+end_rotation = 0.0
 start_scale = Vector2(1, 1)
-end_scale = Vector2(1.5, 1.5)
-trans_type = 9
+end_scale = Vector2(2, 2)
+trans_type = 8
 ease_type = 2
-tween_duration = 0.1
-metadata/_custom_type_script = "uid://mbemlabsnfms"
-
-[node name="ButtonEffect" type="Node" parent="TextureButton" unique_id=645877214 node_paths=PackedStringArray("affected_node")]
-script = ExtResource("4_xb61r")
-affected_node = NodePath("..")
-start_rotation = 5.0
-end_rotation = -5.0
-loop = true
-trans_type = 6
-ease_type = 2
-metadata/_custom_type_script = "uid://mbemlabsnfms"
+metadata/_custom_type_script = "uid://cv1tqomq6d35i"
