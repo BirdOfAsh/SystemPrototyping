@@ -1,5 +1,6 @@
 @abstract class_name TransformEffect extends TweenEffect
 
+
 #region Transform Properties
 @export_category("Transform Properties")
 
@@ -58,9 +59,8 @@ var original_scale : Vector2
 
 #endregion
 
-
-@abstract func set_original_values() -> void
-
+@export_category("Reset Parameters")
+@export var reset_on_completion : bool = false
 
 ## Execute transform tweens for the [param affected_node].
 func do_transform_tween(affected_node : Node) -> void:
@@ -145,10 +145,12 @@ func do_transform_tween(affected_node : Node) -> void:
 		do_transform_tween_backward(affected_node)
 	
 	await tween.finished
+	if reset_on_completion and !loop:
+		reset_to_origin(affected_node)
 
 ## Execute the do_tween function with start and end values reversed, meant to be used
 ## for looping. [br]
-## Not meant to be used alone.
+## Use [param reset] if used alone.
 func do_transform_tween_backward(affected_node : Node, reset : bool = false) -> void:
 	# Reset if run only if the do_backwards is run alone
 	if reset:
@@ -214,3 +216,30 @@ func do_transform_tween_backward(affected_node : Node, reset : bool = false) -> 
 		).from(
 			end_modulate
 		)
+	await tween.finished
+	if reset_on_completion and !loop:
+		reset_to_origin(affected_node)
+
+
+func reset_to_origin(affected_node : Node) -> void:
+	reset_tween()
+	tween.tween_property(
+			affected_node,
+			"position",
+			original_position,
+			tween_duration
+			)
+	tween.tween_property(
+			affected_node,
+			"rotation_degrees",
+			original_rotation,
+			tween_duration
+			)
+	tween.tween_property(
+			affected_node,
+			"scale",
+			original_scale,
+			tween_duration
+			)
+
+@abstract func set_original_values() -> void
