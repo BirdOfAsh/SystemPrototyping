@@ -53,7 +53,7 @@ func do_effect_sequence() -> void:
 		effect_array.reverse()
 		
 		for effect : ControlNodeEffect in effect_array:
-			effect.do_tween_backward()
+			effect.do_tween_backward(true)
 			await effect.tween.finished
 		
 		effect_array.reverse()
