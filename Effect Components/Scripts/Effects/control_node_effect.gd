@@ -15,6 +15,7 @@ func _ready() -> void:
 		do_tween()
 	# Sets the pivot offset to be the center of the control node
 	affected_node.pivot_offset_ratio = Vector2(0.5, 0.5)
+	set_original_values()
 
 
 func do_tween() -> void:

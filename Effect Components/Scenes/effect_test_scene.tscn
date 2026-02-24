@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://mbemlabsnfms" path="res://Effect Components/Scripts/Effects/button_effect.gd" id="2_en1hb"]
 [ext_resource type="Texture2D" uid="uid://dmq8bdbng4qog" path="res://icon.svg" id="2_p3a1m"]
+[ext_resource type="Script" uid="uid://c0eq70gyg7rhf" path="res://Effect Components/Scripts/Effects/control_node_effect.gd" id="3_en1hb"]
 
 [node name="EffectTestScene" type="Node" unique_id=1437132771]
 
 [node name="Control" type="Control" parent="." unique_id=738570213]
+visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -76,3 +78,27 @@ trans_type = 10
 ease_type = 2
 tween_duration = 0.2
 metadata/_custom_type_script = "uid://mbemlabsnfms"
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=812946199]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -251.5
+offset_top = -13.5
+offset_right = 251.5
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ControlNodeEffect" type="Node" parent="ProgressBar" unique_id=1318469197 node_paths=PackedStringArray("affected_node")]
+script = ExtResource("3_en1hb")
+affected_node = NodePath("..")
+end_scale = Vector2(1.5, 1.5)
+reset_on_completion = true
+autostart = true
+trans_type = 5
+ease_type = 2
+metadata/_custom_type_script = "uid://c0eq70gyg7rhf"

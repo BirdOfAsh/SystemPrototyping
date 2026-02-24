@@ -21,7 +21,6 @@ func _ready() -> void:
 
 
 func setup_button_signal() -> void:
-	set_original_values()
 	match button_effect_type:
 		0:
 			affected_node.mouse_entered.connect(do_tween)

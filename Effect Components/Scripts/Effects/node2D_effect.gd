@@ -14,6 +14,8 @@ func _ready() -> void:
 	# Start effect if autostart is enabled
 	if autostart:
 		do_tween()
+	
+	set_original_values()
 
 
 func do_tween() -> void:
