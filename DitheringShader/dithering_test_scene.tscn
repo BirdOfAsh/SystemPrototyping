@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cg555f0tamawh"]
+
+[ext_resource type="Shader" uid="uid://c8snvmlv28r6f" path="res://DitheringShader/bayer_dithering_shader.gdshader" id="1_w60qm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w60qm"]
+shader = ExtResource("1_w60qm")
+shader_parameter/color_levels = 8
+shader_parameter/dither_strength = 1.0
+shader_parameter/dither_scale = 4.0
+
+[node name="DitheringTestScene" type="CanvasLayer" unique_id=621890855]
+layer = 10
+
+[node name="TextureRect" type="ColorRect" parent="." unique_id=890118477]
+material = SubResource("ShaderMaterial_w60qm")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 77.0
+offset_top = 1.0
+offset_right = 77.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

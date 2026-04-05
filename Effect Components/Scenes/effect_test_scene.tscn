@@ -1,12 +1,36 @@
 [gd_scene format=3 uid="uid://cqknxiwwqry2u"]
 
+[ext_resource type="Shader" uid="uid://c8snvmlv28r6f" path="res://DitheringShader/bayer_dithering_shader.gdshader" id="1_en1hb"]
 [ext_resource type="Script" uid="uid://mbemlabsnfms" path="res://Effect Components/Scripts/Effects/button_effect.gd" id="2_en1hb"]
 [ext_resource type="Texture2D" uid="uid://dmq8bdbng4qog" path="res://icon.svg" id="2_p3a1m"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xb61r"]
+shader = ExtResource("1_en1hb")
+shader_parameter/color_levels = 8
+shader_parameter/dither_strength = 1.0
+shader_parameter/dither_scale = 4.000000142499999
+
+[sub_resource type="Gradient" id="Gradient_en1hb"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xb61r"]
+gradient = SubResource("Gradient_en1hb")
+fill_to = Vector2(1, 1)
+
 [node name="EffectTestScene" type="Node" unique_id=1437132771]
 
+[node name="DitheringTestScene" type="CanvasLayer" parent="." unique_id=621890855]
+layer = 10
+
+[node name="TextureRect" type="ColorRect" parent="DitheringTestScene" unique_id=890118477]
+material = SubResource("ShaderMaterial_xb61r")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
 [node name="Control" type="Control" parent="." unique_id=738570213]
-visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -77,3 +101,13 @@ trans_type = 10
 ease_type = 2
 tween_duration = 0.2
 metadata/_custom_type_script = "uid://mbemlabsnfms"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=49395850]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_xb61r")
