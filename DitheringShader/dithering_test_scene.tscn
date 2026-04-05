@@ -4,9 +4,15 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w60qm"]
 shader = ExtResource("1_w60qm")
-shader_parameter/color_levels = 8
+shader_parameter/color_levels = 12
 shader_parameter/dither_strength = 1.0
-shader_parameter/dither_scale = 4.0
+shader_parameter/dither_scale = 2.0000000475
+
+[sub_resource type="Gradient" id="Gradient_en1hb"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_w60qm"]
+gradient = SubResource("Gradient_en1hb")
+fill_to = Vector2(1, 1)
 
 [node name="DitheringTestScene" type="CanvasLayer" unique_id=621890855]
 layer = 10
@@ -16,10 +22,16 @@ material = SubResource("ShaderMaterial_w60qm")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 77.0
-offset_top = 1.0
-offset_right = 77.0
-offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=122936241]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_w60qm")
