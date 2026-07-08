@@ -39,7 +39,7 @@ func do_effect_sequence() -> void:
 		if effect.loop:
 			loop = false
 			#effect.loop = false
-			print("Loop in effect found, breaking out of sequence.")
+			push_warning("Loop in effect found, breaking out of sequence.")
 			#printerr(effect, "Set loop to false, does not apply when played in sequence.")
 		
 		# Disable autostart for all effects

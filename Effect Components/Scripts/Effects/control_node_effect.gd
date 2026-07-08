@@ -28,6 +28,7 @@ func do_tween_backward(reset : bool = false) -> void:
 
 ## Sets the original transform values to the [member affected_node]
 func set_original_values() -> void:
+	await get_tree().physics_frame
 	original_position = affected_node.position
 	original_rotation = affected_node.rotation
 	original_scale = affected_node.scale
