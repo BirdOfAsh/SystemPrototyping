@@ -19,11 +19,11 @@ func _ready() -> void:
 
 
 func do_tween() -> void:
-	do_transform_tween(affected_node)
+	_do_transform_tween(affected_node)
 
 
 func do_tween_backward(reset : bool = false) -> void:
-	do_transform_tween_backward(affected_node, reset)
+	_do_transform_tween_backward(affected_node, reset)
 
 
 ## Sets the original transform values to the [member affected_node]

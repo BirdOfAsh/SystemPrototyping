@@ -26,21 +26,21 @@ var tween : Tween
 
 ## This function resets and creates a new tween with all given parameters:
 ## [member trans_type], [member ease_type].
-func reset_tween() -> void:
+func _reset_tween() -> void:
 	# If there is a current tween, abort it
 	if tween:
 		tween.kill()
 	# Setup the new tween
-	setup_tween()
+	_setup_tween()
 
 ## Creates the tween with the [member ease_type], [member trans_type] and
 ## allow for tweening to be done simultaneously
-func setup_tween() -> void:
+func _setup_tween() -> void:
 	tween = create_tween().set_ease(ease_type).set_trans(trans_type).set_parallel(true)
 
 
 ## Kill the [member tween] if a [member tween] exists
-func stop_tween() -> void:
+func _stop_tween() -> void:
 	if tween:
 		tween.kill()
 

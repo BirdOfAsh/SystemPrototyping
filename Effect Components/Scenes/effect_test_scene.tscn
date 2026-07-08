@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://mbemlabsnfms" path="res://Effect Components/Scripts/Effects/button_effect.gd" id="2_en1hb"]
 [ext_resource type="Texture2D" uid="uid://dmq8bdbng4qog" path="res://icon.svg" id="2_p3a1m"]
+[ext_resource type="Script" uid="uid://cv1tqomq6d35i" path="res://Effect Components/Scripts/Effects/node2D_effect.gd" id="3_en1hb"]
 
 [node name="EffectTestScene" type="Node" unique_id=1437132771]
 
 [node name="Control" type="Control" parent="." unique_id=738570213]
+visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -76,3 +78,14 @@ trans_type = 10
 ease_type = 2
 tween_duration = 0.2
 metadata/_custom_type_script = "uid://mbemlabsnfms"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1332281534]
+position = Vector2(313, 321)
+texture = ExtResource("2_p3a1m")
+
+[node name="Node2DEffect" type="Node" parent="Sprite2D" unique_id=2111377029 node_paths=PackedStringArray("affected_node")]
+script = ExtResource("3_en1hb")
+affected_node = NodePath("..")
+end_position = Vector2(400, inf)
+autostart = true
+metadata/_custom_type_script = "uid://cv1tqomq6d35i"

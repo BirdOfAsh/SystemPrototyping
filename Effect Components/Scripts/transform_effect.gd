@@ -73,7 +73,7 @@ var current_scale : Vector2
 @export var reset_on_completion : bool = false
 
 ## Execute transform tweens for the [param affected_node].
-func do_transform_tween(_affected_node : Node) -> void:
+func _do_transform_tween(_affected_node : Node) -> void:
 	# Return if there is no node
 	if !_affected_node:
 		printerr(self, "No node assigned to Node2D Effect")
@@ -81,7 +81,7 @@ func do_transform_tween(_affected_node : Node) -> void:
 	
 	
 	# Create a new tween with given parameters
-	reset_tween()
+	_reset_tween()
 	
 	
 	# Set the current values from _affected_node
@@ -91,156 +91,52 @@ func do_transform_tween(_affected_node : Node) -> void:
 	if loop:
 		tween.set_loops()
 	
-	# Tween the positions if not default
-	if start_position.x != end_position.x:
-		tween.tween_property(
-			_affected_node,
-			"position:x",
-			end_position.x if end_position.x != INF else current_position.x,
-			tween_duration
-			).from(
-				start_position.x if start_position.x != INF else current_position.x
-				)
-	if start_position.y != end_position.y:
-		tween.tween_property(
-			_affected_node,
-			"position:y",
-			end_position.y if end_position.y != INF else current_position.y,
-			tween_duration
-			).from(
-				start_position.y if start_position.y != INF else current_position.y
-				)
+
+	_tween_position(_affected_node)
 	
-	# Tween the rotation if not default
-	if start_rotation != end_rotation:
-		tween.tween_property(
-			_affected_node,
-			"rotation_degrees",
-			end_rotation if end_rotation != INF else current_rotation,
-			tween_duration
-			).from(
-				start_rotation if start_rotation != INF else current_rotation
-				)
+	_tween_rotation(_affected_node)
 	
-	# Tween the scale if not default
-	if start_scale.x != end_scale.x:
-		tween.tween_property(
-			_affected_node,
-			"scale:x",
-			end_scale.x if end_scale.x != INF else current_scale.x,
-			tween_duration
-			).from(
-				start_scale.x if start_scale.x != INF else current_scale.x
-				)
-	if start_scale.y != end_scale.y:
-		tween.tween_property(
-			_affected_node,
-			"scale:y",
-			end_scale.y if end_scale.y != INF else current_scale.y,
-			tween_duration
-			).from(
-				start_scale.y if start_scale.y != INF else current_scale.y
-				)
+	_tween_scale(_affected_node)
 	
-	# Tween modulate if start_modulate and end_modulate are not the same
-	if start_modulate != end_modulate:
-		tween.tween_property(
-			_affected_node,
-			"modulate",
-			end_modulate,
-			tween_duration
-		).from(
-			start_modulate
-		)
+	_tween_modulate(_affected_node)
+	
 	
 	if loop:
 		tween.chain()
 		
-		do_transform_tween_backward(_affected_node)
+		_do_transform_tween_backward(_affected_node)
 	
 	await tween.finished
 	if reset_on_completion and !loop:
-		reset_to_origin(_affected_node)
+		_reset_to_origin(_affected_node)
 
 ## Execute the do_tween function with start and end values reversed, meant to be used
 ## for looping. [br]
 ## Use [param reset] if used alone.
-func do_transform_tween_backward(_affected_node : Node, reset : bool = false) -> void:
+func _do_transform_tween_backward(_affected_node : Node, reset : bool = false) -> void:
 	# Reset if run only if the do_backwards is run alone
 	if reset:
-		setup_tween()
+		_setup_tween()
 	
 	# Set the current values from _affected_node
 	set_current_values()
 	
-	# Tween the positions if not default
-	if start_position.x != end_position.x:
-		tween.tween_property(
-			_affected_node,
-			"position:x",
-			start_position.x if start_position.x != INF else current_position.x,
-			tween_duration
-			).from(
-				end_position.x if end_position.x != INF else current_position.x
-				)
-	if start_position.y != end_position.y:
-		tween.tween_property(
-			_affected_node,
-			"position:y",
-			start_position.y if start_position.y != INF else current_position.y,
-			tween_duration
-			).from(
-				end_position.y if end_position.y != INF else current_position.y
-				)
+	_tween_position(_affected_node, false)
 	
-	# Tween the rotation if not default
-	if start_rotation != end_rotation:
-		tween.tween_property(
-			_affected_node,
-			"rotation_degrees",
-			start_rotation if start_rotation != INF else current_rotation,
-			tween_duration
-			).from(
-				end_rotation if end_rotation != INF else current_rotation
-				)
+	_tween_rotation(_affected_node, false)
 	
-	# Tween the scale if not default
-	if start_scale.x != end_scale.x:
-		tween.tween_property(
-			_affected_node,
-			"scale:x",
-			start_scale.x if start_scale.x != INF else current_scale.x,
-			tween_duration
-			).from(
-				end_scale.x if end_scale.x != INF else current_scale.x
-				)
-	if start_scale.x != end_scale.y:
-		tween.tween_property(
-			_affected_node,
-			"scale:y",
-			start_scale.y if start_scale.y != INF else current_scale.y,
-			tween_duration
-			).from(
-				end_scale.y if end_scale.y != INF else current_scale.y
-				)
+	_tween_scale(_affected_node, false)
 	
-	# Tween modulate if start_modulate and end_modulate are not the smae
-	if start_modulate != end_modulate:
-		tween.tween_property(
-			_affected_node,
-			"modulate",
-			start_modulate,
-			tween_duration
-		).from(
-			end_modulate
-		)
+	_tween_modulate(_affected_node, false)
+	
+
 	await tween.finished
 	if reset_on_completion and !loop:
-		reset_to_origin(_affected_node)
+		_reset_to_origin(_affected_node)
 
 
-func reset_to_origin(_affected_node : Node) -> void:
-	reset_tween()
+func _reset_to_origin(_affected_node : Node) -> void:
+	_reset_tween()
 	tween.tween_property(
 			_affected_node,
 			"position",
@@ -259,6 +155,76 @@ func reset_to_origin(_affected_node : Node) -> void:
 			original_scale,
 			tween_duration
 			)
+
+
+func _tween_position(_affected_node : Node, forward : bool = true) -> void:
+	# Tween the positions if not default
+	if start_position.x != end_position.x:
+		tween.tween_property(
+			_affected_node,
+			"position:x",
+			(end_position.x if end_position.x != INF else current_position.x) if forward else (start_position.x if start_position.x != INF else current_position.x),
+			tween_duration
+			).from(
+				(start_position.x if start_position.x != INF else current_position.x) if forward else (end_position.x if end_position.x != INF else current_position.x)
+				)
+	if start_position.y != end_position.y:
+		tween.tween_property(
+			_affected_node,
+			"position:y",
+			(end_position.y if end_position.y != INF else current_position.y) if forward else (start_position.y if start_position.y != INF else current_position.y),
+			tween_duration
+			).from(
+				(start_position.y if start_position.y != INF else current_position.y) if forward else (end_position.y if end_position.y != INF else current_position.y)
+				)
+
+
+func _tween_rotation(_affected_node : Node, forward : bool = true) -> void:
+	# Tween the rotation if not default
+	if start_rotation != end_rotation:
+		tween.tween_property(
+			_affected_node,
+			"rotation_degrees",
+			(end_rotation if end_rotation != INF else current_rotation) if forward else (start_rotation if start_rotation != INF else current_rotation),
+			tween_duration
+			).from(
+				(start_rotation if start_rotation != INF else current_rotation) if forward else (end_rotation if end_rotation != INF else current_rotation)
+				)
+
+
+func _tween_scale(_affected_node : Node, forward : bool = true) -> void:
+	# Tween the scale if not default
+	if start_scale.x != end_scale.x:
+		tween.tween_property(
+			_affected_node,
+			"scale:x",
+			(end_scale.x if end_scale.x != INF else current_scale.x) if forward else (start_scale.x if start_scale.x != INF else current_scale.x),
+			tween_duration
+			).from(
+				(start_scale.x if start_scale.x != INF else current_scale.x) if forward else (end_scale.x if end_scale.x != INF else current_scale.x)
+				)
+	if start_scale.y != end_scale.y:
+		tween.tween_property(
+			_affected_node,
+			"scale:y",
+			(end_scale.y if end_scale.y != INF else current_scale.y) if forward else (start_scale.y if start_scale.y != INF else current_scale.y),
+			tween_duration
+			).from(
+				(start_scale.y if start_scale.y != INF else current_scale.y) if forward else (end_scale.y if end_scale.y != INF else current_scale.y)
+				)
+
+
+func _tween_modulate(_affected_node : Node, forward : bool = true) -> void:
+	# Tween modulate if start_modulate and end_modulate are not the same
+	if start_modulate != end_modulate:
+		tween.tween_property(
+			_affected_node,
+			"modulate",
+			end_modulate if forward else start_modulate,
+			tween_duration
+		).from(
+			start_modulate if forward else end_modulate
+		)
 
 
 @abstract func set_original_values() -> void
