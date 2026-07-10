@@ -80,10 +80,6 @@ func _do_transform_tween(_affected_node : Node) -> void:
 		return
 	
 	
-	# Create a new tween with given parameters
-	_reset_tween()
-	
-	
 	# Set the current values from _affected_node
 	set_current_values()
 	

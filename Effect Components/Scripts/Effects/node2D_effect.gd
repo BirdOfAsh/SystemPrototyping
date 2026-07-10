@@ -6,7 +6,6 @@ class_name Node2DEffect extends TransformEffect
 ## The node which will have the effect applied.
 @export var affected_node : Node2D
 
-
 func _ready() -> void:
 	# Check if there is a node
 	if !affected_node:
@@ -19,10 +18,14 @@ func _ready() -> void:
 
 
 func do_tween() -> void:
+	# Create a new tween with given parameters
+	_reset_tween()
 	_do_transform_tween(affected_node)
 
 
 func do_tween_backward(reset : bool = false) -> void:
+	# Create a new tween with given parameters
+	_reset_tween()
 	_do_transform_tween_backward(affected_node, reset)
 
 
