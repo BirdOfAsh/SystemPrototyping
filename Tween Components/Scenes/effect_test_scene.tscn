@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cqknxiwwqry2u"]
+
+[ext_resource type="Script" uid="uid://c0eq70gyg7rhf" path="res://Tween Components/Scripts/Components/control_tween.gd" id="1_m4g0h"]
+[ext_resource type="Script" uid="uid://cct0slx0ktj60" path="res://Tween Components/Scripts/TweenResources/transform_tween.gd" id="2_84d66"]
+[ext_resource type="Texture2D" uid="uid://dmq8bdbng4qog" path="res://icon.svg" id="3_2d5xy"]
+[ext_resource type="Script" uid="uid://cdere083tmmuo" path="res://Tween Components/Scripts/TweenResources/offset_transform_tween.gd" id="3_8c1su"]
+
+[sub_resource type="Resource" id="Resource_5h6k7"]
+script = ExtResource("2_84d66")
+metadata/_custom_type_script = "uid://cct0slx0ktj60"
+
+[sub_resource type="Resource" id="Resource_m4g0h"]
+script = ExtResource("3_8c1su")
+metadata/_custom_type_script = "uid://cdere083tmmuo"
+
+[node name="EffectTestScene" type="Node" unique_id=1437132771]
+
+[node name="Control" type="Control" parent="." unique_id=738570213]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ControlNodeEffect" type="Node" parent="Control" unique_id=282090064 node_paths=PackedStringArray("affected_node")]
+script = ExtResource("1_m4g0h")
+affected_node = NodePath("..")
+transform_tween = SubResource("Resource_5h6k7")
+offset_transform_tween = SubResource("Resource_m4g0h")
+autostart = true
+metadata/_custom_type_script = "uid://c0eq70gyg7rhf"
+
+[node name="Sprite2D" type="Sprite2D" parent="Control" unique_id=1332281534]
+texture = ExtResource("3_2d5xy")

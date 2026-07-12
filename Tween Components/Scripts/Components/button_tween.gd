@@ -1,4 +1,4 @@
-class_name ButtonEffect extends ControlNodeEffect
+class_name ButtonEffect extends ControlTween
 ## [ButtonEffect] is an extension of [ControlNodeEffect] designed to be used 
 
 @export_enum(
@@ -24,7 +24,7 @@ func setup_button_signal() -> void:
 	match button_effect_type:
 		0:
 			affected_node.mouse_entered.connect(do_tween)
-			affected_node.mouse_exited.connect(do_tween_backward.bind(true))
+			affected_node.mouse_exited.connect(do_tween.bind(false))
 		1:
 			affected_node.mouse_entered.connect(do_tween)
 		2:
@@ -33,7 +33,7 @@ func setup_button_signal() -> void:
 			(affected_node as BaseButton).pressed.connect(do_tween)
 		4:
 			(affected_node as BaseButton).button_down.connect(do_tween)
-			(affected_node as BaseButton).button_up.connect(do_tween_backward.bind(true))
+			(affected_node as BaseButton).button_up.connect(do_tween.bind(false))
 		5:
 			(affected_node as BaseButton).button_down.connect(do_tween)
 		6:

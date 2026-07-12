@@ -1,5 +1,5 @@
-class_name ControlNodeEffectSequencer extends Node
-## The purpose of [ControlNodeEffectSequencer] is to hold and call a series of [ControlNodeEffect]
+class_name ControlTweenSequencer extends Node
+## The purpose of [ControlTweenSequencer] is to hold and call a series of [ControlTween]
 ## in sequence, to allow for the more complex tween animation.
 
 ## The node which was have a sequence of effects applied
@@ -12,7 +12,7 @@ class_name ControlNodeEffectSequencer extends Node
 @export var autostart : bool = false
 
 ## Array of held [ControlNodeEffect]
-@export var effect_array : Array[ControlNodeEffect]
+@export var tween_array : Array[ControlTween]
 
 
 func _ready() -> void:
@@ -25,42 +25,35 @@ func _ready() -> void:
 	
 
 
-## Calls the do_effect of every [ControlNodeEffect] in sequence
+## Calls the do_effect of every [ControlTween] in sequence
 func do_effect_sequence() -> void:
 	# Check if there is a node to affect
 	if !affected_node:
 		printerr(self, "There was no node to apply effects to!")
 		return
 	
-	for effect : ControlNodeEffect in effect_array:
-		effect.affected_node = affected_node
+	for control_tween : ControlTween in tween_array:
+		control_tween.affected_node = affected_node
 		
 		# Disable loop for all effects
-		if effect.loop:
-			effect.loop = false
-			printerr(effect, "Set loop to false, does not apply when played in sequence.")
+		if control_tween.loop:
+			control_tween.loop = false
+			printerr(control_tween, "Set loop to false, does not apply when played in sequence.")
 		
 		# Disable autostart for all effects
-		if effect.autostart:
-			effect.autostart = false
-			printerr(effect, "Set autostart to false, does not apply when played in sequence.")
+		if control_tween.autostart:
+			control_tween.autostart = false
+			printerr(control_tween, "Set autostart to false, does not apply when played in sequence.")
 		
-		effect.do_tween()
-		await effect.tween.finished
+		control_tween.do_tween()
+		await control_tween.tween.finished
 	
-	# Loop if [member loop] is true
+	# We loopin
 	if loop:
-		effect_array.reverse()
-		
-		for effect : ControlNodeEffect in effect_array:
-			effect.do_tween_backward(true)
-			await effect.tween.finished
-		
-		effect_array.reverse()
 		do_effect_sequence()
 
 
 ## Stops the sequence by killing every tween in the array of [member effect_array]
 func stop_sequence() -> void:
-	for effect : ControlNodeEffect in effect_array:
-		effect.stop_tween()
+	for control_tween : ControlTween in tween_array:
+		control_tween.stop_tween()

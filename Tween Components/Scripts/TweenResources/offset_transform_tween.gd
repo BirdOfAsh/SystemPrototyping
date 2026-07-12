@@ -1,4 +1,4 @@
-class_name OffsetTransformEffect extends Resource
+class_name OffsetTransformTween extends TweenResource
 
 
 #region Offset Transform Properties
@@ -13,9 +13,6 @@ class_name OffsetTransformEffect extends Resource
 ## Has INF values by default, and will ignore individual x or y if left unchanged.
 @export var end_offset_position : Vector2 = Vector2.INF
 
-## Original position of the node 
-var original_offset_position : Vector2
-
 ## The current position of the node, stored in a variable
 var current_offset_position : Vector2
 
@@ -28,9 +25,6 @@ var current_offset_position : Vector2
 ## The rotation amount is the rotation degrees the tween will end at. [br]
 ## Has INF value by default, and will ignore this parameter if unchanged.
 @export var end_offset_rotation : float = INF
-
-## Original rotation of the node in degrees
-var original_offset_rotation : float
 
 ## The current rotate of the node in rotation_degrees, stored in a variable
 var current_offset_rotation : float
@@ -45,13 +39,11 @@ var current_offset_rotation : float
 ## Has INF values by default, and will ignore individual x or y if left unchanged.
 @export var end_offset_scale : Vector2 = Vector2.INF
 
-## Original scale of the node in degrees
-var original_offset_scale : Vector2
-
 ## The current rotate of the node in rotation_degrees, stored in a variable
 var current_offset_scale : Vector2
 
 #endregion
+
 
 ## Call to tween each of the individual offset transform properties (position, rotation, scale)
 func tween_offset_properties(tween : Tween, tween_duration : float, _affected_node : Control, forward : bool = true) -> void:
@@ -61,10 +53,6 @@ func tween_offset_properties(tween : Tween, tween_duration : float, _affected_no
 
 
 func _tween_offset_position(tween : Tween, tween_duration : float, _affected_node : Control, forward : bool = true) -> void:
-	# Check for unnecessary call
-	if start_offset_position.x == end_offset_position.x: return
-	if start_offset_position.y == end_offset_position.y: return
-	
 	# Tween position.x
 	tween.tween_property(
 		_affected_node,
@@ -87,9 +75,6 @@ func _tween_offset_position(tween : Tween, tween_duration : float, _affected_nod
 
 
 func _tween_offset_rotation(tween : Tween, tween_duration : float, _affected_node : Node, forward : bool = true) -> void:
-	# Check for unnecessary call
-	if start_offset_rotation == end_offset_rotation: return
-	
 	# Tween rotation
 	tween.tween_property(
 		_affected_node,
@@ -102,9 +87,6 @@ func _tween_offset_rotation(tween : Tween, tween_duration : float, _affected_nod
 
 
 func _tween_offset_scale(tween : Tween, tween_duration : float, _affected_node : Node, forward : bool = true) -> void:
-	# Check for unnecessary call
-	if start_offset_scale.x == end_offset_scale.x: return
-	
 	# Tween scale.x
 	tween.tween_property(
 		_affected_node,
@@ -124,3 +106,10 @@ func _tween_offset_scale(tween : Tween, tween_duration : float, _affected_node :
 		).from(
 			(start_offset_scale.y if start_offset_scale.y != INF else current_offset_scale.y) if forward else (end_offset_scale.y if end_offset_scale.y != INF else current_offset_scale.y)
 			)
+
+
+## Set the current offset transform values when the tween is run
+func set_current_values(_affected_node : Control) -> void:
+	current_offset_position = _affected_node.offset_transform_position
+	current_offset_rotation = _affected_node.offset_transform_rotation
+	current_offset_scale = _affected_node.offset_transform_scale

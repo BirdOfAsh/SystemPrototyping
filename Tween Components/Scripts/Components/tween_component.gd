@@ -1,6 +1,6 @@
-@abstract class_name TweenEffect extends Node
-## The TweenEffect class is an abstract class meant to be used to build out other
-## effect classes using tweens. [br]
+@abstract class_name TweenComponent extends Node
+## The TweenComponent class is an abstract class meant to be used to build out other
+## tween component classes. [br]
 ## This class contains all of the information relating to the tween including
 ## transitions, easing, and the tween's duration.
 
@@ -23,6 +23,7 @@
 ## The variable holding the tween.
 var tween : Tween
 
+enum PLAY_DIRECTIONS {forward, backward}
 
 ## This function resets and creates a new tween with all given parameters:
 ## [member trans_type], [member ease_type].
@@ -45,6 +46,7 @@ func _stop_tween() -> void:
 		tween.kill()
 
 
-@abstract func do_tween() -> void
-## This function calls the specific application of the tween, which must be defined
-## in any subclass of [TweenEffect].
+@abstract func do_tween(forward : bool = true) -> void
+
+
+@abstract func set_current_values() -> void

@@ -25,10 +25,10 @@ window/stretch/mode="canvas_items"
 [file_customization]
 
 folder_colors={
-"res://Effect Components/": "teal",
-"res://Effect Components/Assets/": "purple",
-"res://Effect Components/Scenes/": "blue",
-"res://Effect Components/Scripts/": "yellow"
+"res://Tween Components/": "teal",
+"res://Tween Components/Assets/": "purple",
+"res://Tween Components/Scenes/": "blue",
+"res://Tween Components/Scripts/": "yellow"
 }
 
 [gui]
