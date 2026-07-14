@@ -7,11 +7,14 @@ class_name ControlTween extends TweenComponent
 @export var affected_node : Control
 ## The transform tween resource
 @export var transform_tween : TransformTween
+## The canvas item tween resource
+@export var canvas_item_tween : CanvasItemTween
 ## The offset transform tween resource
 @export var offset_transform_tween : OffsetTransformTween
 
 
 func _ready() -> void:
+	super()
 	if has_errors(): return
 	
 	if autostart: do_tween()
@@ -29,28 +32,38 @@ func do_tween(forward : bool = true) -> void:
 	_reset_tween()
 	# Set all the current values for the relevant tween values
 	set_current_values()
-	
 	# Set up the loop
 	if loop:
 		tween.set_loops()
 	
 	# Tween that shit
-	transform_tween.tween_transform_properties(tween, tween_duration, affected_node, forward)
-	offset_transform_tween.tween_offset_properties(tween, tween_duration, affected_node, forward)
+	_tween_values(forward)
 	
 	# Set up chaining
 	if loop:
 		tween.chain()
-		transform_tween.tween_transform_properties(tween, tween_duration, affected_node, forward)
-		offset_transform_tween.tween_offset_properties(tween, tween_duration, affected_node, forward)
+		_tween_values(forward)
 	
 	# Await for tween to finish so that it can loop
 	await tween.finished
 
 
+## Wrapper to call the tween functions from all the tween resources
+func _tween_values(forward : bool = true) -> void:
+	if !use_custom_curve:
+		transform_tween.tween_properties(tween, tween_duration, affected_node, forward)
+		canvas_item_tween.tween_properties(tween, tween_duration, affected_node, forward)
+		offset_transform_tween.tween_properties(tween, tween_duration, affected_node, forward)
+	else:
+		transform_tween.custom_tween_properties(tween, tween_duration, affected_node, transition_curve, forward)
+		canvas_item_tween.custom_tween_properties(tween, tween_duration, affected_node, transition_curve, forward)
+		offset_transform_tween.custom_tween_properties(tween, tween_duration, affected_node, transition_curve, forward)
+
+
 ## Sets the current transform values to the [member affected_node]
 func set_current_values() -> void:
 	transform_tween.set_current_values(affected_node)
+	canvas_item_tween.set_current_values(affected_node)
 	offset_transform_tween.set_current_values(affected_node)
 
 

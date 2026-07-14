@@ -19,11 +19,21 @@
 @export var ease_type : Tween.EaseType
 ## Duration of the tween as a [float].
 @export var tween_duration : float = 1.0
+## Toggles if the [transition_curve] should be used as the transition type
+@export var use_custom_curve : bool = false
+## The custom curve transition
+@export var transition_curve : Curve
 
 ## The variable holding the tween.
 var tween : Tween
 
-enum PLAY_DIRECTIONS {forward, backward}
+
+func _ready() -> void:
+	# Check if the custom curve is used and if the curve is valid.
+	if use_custom_curve and curve_is_valid():
+		# Bake the curve once at the beginning so it's more performant when sampling
+		transition_curve.bake()
+
 
 ## This function resets and creates a new tween with all given parameters:
 ## [member trans_type], [member ease_type].
@@ -34,8 +44,9 @@ func _reset_tween() -> void:
 	# Setup the new tween
 	_setup_tween()
 
+
 ## Creates the tween with the [member ease_type], [member trans_type] and
-## allow for tweening to be done simultaneously
+## allow for tweening to be done simultaneously.
 func _setup_tween() -> void:
 	tween = create_tween().set_ease(ease_type).set_trans(trans_type).set_parallel(true)
 
@@ -46,7 +57,21 @@ func _stop_tween() -> void:
 		tween.kill()
 
 
+## Returns if a curve is valid. [br]
+## A curve is valid of it has points at the min and max of the curve, so the whole curve can be traversed.
+func curve_is_valid() -> bool:
+	# Check if the first point is at the min of the curve
+	if transition_curve.get_point_position(0) != Vector2(0.0, 0.0): return false
+	# Check if the last point is at the max of the curve
+	if transition_curve.get_point_position(transition_curve.point_count - 1) != Vector2(1.0, 1.0): return false
+	
+	return true
+
+
 @abstract func do_tween(forward : bool = true) -> void
 
+@abstract func _tween_values(forward : bool = true) -> void
 
 @abstract func set_current_values() -> void
+
+@abstract func has_errors() -> bool

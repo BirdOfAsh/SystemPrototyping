@@ -42,29 +42,22 @@ var current_scale : Vector2
 
 #endregion
 
-#region CanvasItem Properties
-@export_group("Visibility")
-
-## The modulate the node will start at, if WHITE then will set to default. [br]
-## If both modulate are the same, the tween will ignore modulation
-@export var start_modulate : Color = Color.WHITE
-
-## The modulate the node will end at, if WHITE then will set to default. [br]
-## If both modulate are the same, the tween will ignore modulation
-@export var end_modulate : Color = Color.WHITE
-
-
-#endregion
-
 
 ## Execute transform tweens for the [param affected_node].
-func tween_transform_properties(tween : Tween, tween_duration : float, _affected_node : Node, forward : bool = true) -> void:
+func tween_properties(tween : Tween, tween_duration : float, _affected_node : Node, forward : bool = true) -> void:
 	_tween_position(tween, tween_duration, _affected_node, forward)
 	_tween_rotation(tween, tween_duration, _affected_node, forward)
 	_tween_scale(tween, tween_duration, _affected_node, forward)
-	_tween_modulate(tween, tween_duration, _affected_node, forward)
 
 
+## Execute transform tweens for the [param affected_node] with a custom transition curve.
+func custom_tween_properties(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
+	_custom_tween_position(tween, tween_duration, _affected_node, curve, forward)
+	_custom_tween_rotation(tween, tween_duration, _affected_node, curve, forward)
+	_custom_tween_scale(tween, tween_duration, _affected_node, curve, forward)
+
+
+#region Transform Functions
 func _tween_position(tween : Tween, tween_duration : float, _affected_node : Node, forward : bool = true) -> void:
 	# Tween the positions if not default
 	if start_position.x != end_position.x:
@@ -120,19 +113,67 @@ func _tween_scale(tween : Tween, tween_duration : float, _affected_node : Node, 
 			).from(
 				(start_scale.y if start_scale.y != INF else current_scale.y) if forward else (end_scale.y if end_scale.y != INF else current_scale.y)
 				)
+#endregion
 
 
-func _tween_modulate(tween : Tween, tween_duration : float, _affected_node : Node, forward : bool = true) -> void:
-	# Tween modulate if start_modulate and end_modulate are not the same
-	if start_modulate != end_modulate:
-		tween.tween_property(
-			_affected_node,
-			"modulate",
-			end_modulate if forward else start_modulate,
-			tween_duration
-		).from(
-			start_modulate if forward else end_modulate
-		)
+#region Custom Transform Functions
+func _custom_tween_position(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
+	# Set the starting from -> this exists because MethodTweener does not have the .from() function
+	var starting_pos_x : float = (start_position.x if start_position.x != INF else current_position.x) if forward else (end_position.x if end_position.x != INF else current_position.x)
+	var starting_pos_y : float = (start_position.y if start_position.y != INF else current_position.y) if forward else (end_position.y if end_position.y != INF else current_position.y)
+	(_affected_node as Control).offset_transform_position = Vector2(starting_pos_x, starting_pos_y)
+	
+	# Tween along the curve and lerp towards the sampled point
+	tween.tween_method(
+		func (progress : float): # DON'T WORRY ABOUT IT JUST PASSES IN PROGRESS -> PROGRESS IS A NUMBER FROM THE MIN TO MAX VALUES
+			var curve_progress : float = curve.sample_baked(progress)
+			var target_pos_x : float = (end_position.x if end_position.x != INF else current_position.x) if forward else (start_position.x if start_position.x != INF else current_position.x)
+			var target_pos_y : float = (end_position.y if end_position.y != INF else current_position.y) if forward else (start_position.y if start_position.y != INF else current_position.y)
+			(_affected_node as Control).offset_transform_position = (Vector2(starting_pos_x, starting_pos_y)).lerp(Vector2(target_pos_x, target_pos_y), curve_progress)
+			,
+		curve.min_domain,
+		curve.max_domain,
+		tween_duration
+	)
+
+
+func _custom_tween_rotation(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
+	# Set the starting from -> this exists because MethodTweener does not have the .from() function
+	var starting_rot : float = (start_rotation if start_rotation != INF else current_rotation) if forward else (end_rotation if end_rotation != INF else current_rotation)
+	(_affected_node as Control).offset_transform_rotation = starting_rot
+	
+	# Tween along the curve and lerp towards the sampled point
+	tween.tween_method(
+		func (progress : float): # DON'T WORRY ABOUT IT JUST PASSES IN PROGRESS -> PROGRESS IS A NUMBER FROM THE MIN TO MAX VALUES
+			var curve_progress : float = curve.sample_baked(progress)
+			var target_rot : float = (end_rotation if end_rotation != INF else current_rotation) if forward else (start_rotation if start_rotation != INF else current_rotation)
+			(_affected_node as Control).offset_transform_rotation = lerpf(starting_rot, target_rot, curve_progress)
+			,
+		curve.min_domain,
+		curve.max_domain,
+		tween_duration
+	)
+
+
+func _custom_tween_scale(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
+	# Set the starting from -> this exists because MethodTweener does not have the .from() function
+	var starting_scale_x : float = (start_scale.x if start_scale.x != INF else current_scale.x) if forward else (end_scale.x if end_scale.x != INF else current_scale.x)
+	var starting_scale_y : float = (start_scale.y if start_scale.y != INF else current_scale.y) if forward else (end_scale.y if end_scale.y != INF else current_scale.y)
+	(_affected_node as Control).offset_transform_scale = Vector2(starting_scale_x, starting_scale_y)
+	
+	# Tween along the curve and lerp towards the sampled point
+	tween.tween_method(
+		func (progress : float): # DON'T WORRY ABOUT IT JUST PASSES IN PROGRESS -> PROGRESS IS A NUMBER FROM THE MIN TO MAX VALUES
+			var curve_progress : float = curve.sample_baked(progress)
+			var target_scale_x : float = (end_scale.x if end_scale.x != INF else current_scale.x) if forward else (start_scale.x if start_scale.x != INF else current_scale.x)
+			var target_scale_y : float = (end_scale.y if end_scale.y != INF else current_scale.y) if forward else (start_scale.y if start_scale.y != INF else current_scale.y)
+			(_affected_node as Control).offset_transform_position = (Vector2(starting_scale_x, starting_scale_y)).lerp(Vector2(target_scale_x, target_scale_y), curve_progress)
+			,
+		curve.min_domain,
+		curve.max_domain,
+		tween_duration
+	)
+#endregion
 
 
 func set_current_values(_affected_node : Node) -> void:

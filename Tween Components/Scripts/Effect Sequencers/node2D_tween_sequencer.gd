@@ -21,12 +21,12 @@ func _ready() -> void:
 		return
 	# Start sequence if autostart is enabled
 	if autostart:
-		do_effect_sequence()
+		do_tween_sequence()
 	
 
 
 ## Calls the do_effect of every [Node2DEffect] in sequence
-func do_effect_sequence() -> void:
+func do_tween_sequence() -> void:
 	# Check if there is a node to affect
 	if !affected_node:
 		printerr(self, "There was no node to apply effects to!")
@@ -51,10 +51,10 @@ func do_effect_sequence() -> void:
 	
 	# We loopin
 	if loop:
-		do_effect_sequence()
+		do_tween_sequence()
 
 
 ## Stops the sequence by killing every tween in the array of [member effect_array]
 func stop_sequence() -> void:
 	for node2D_tween : Node2DTween in tween_array:
-		node2D_tween.stop_tween()
+		node2D_tween._stop_tween()
