@@ -168,7 +168,7 @@ func _custom_tween_offset_scale(tween : Tween, tween_duration : float, _affected
 			var curve_progress : float = curve.sample_baked(progress)
 			var target_scale_x : float = (end_offset_scale.x if end_offset_scale.x != INF else current_offset_scale.x) if forward else (start_offset_scale.x if start_offset_scale.x != INF else current_offset_scale.x)
 			var target_scale_y : float = (end_offset_scale.y if end_offset_scale.y != INF else current_offset_scale.y) if forward else (start_offset_scale.y if start_offset_scale.y != INF else current_offset_scale.y)
-			(_affected_node as Control).offset_transform_position = (Vector2(starting_scale_x, starting_scale_y)).lerp(Vector2(target_scale_x, target_scale_y), curve_progress)
+			(_affected_node as Control).offset_transform_scale = (Vector2(starting_scale_x, starting_scale_y)).lerp(Vector2(target_scale_x, target_scale_y), curve_progress)
 			,
 		curve.min_domain,
 		curve.max_domain,

@@ -60,10 +60,18 @@ func _stop_tween() -> void:
 ## Returns if a curve is valid. [br]
 ## A curve is valid of it has points at the min and max of the curve, so the whole curve can be traversed.
 func curve_is_valid() -> bool:
+	# Is there ever a damn curve
+	if !transition_curve:
+		printerr("%s: No curve assigned to %s, and attempted to run." % [self, self.name])
+		return false
 	# Check if the first point is at the min of the curve
-	if transition_curve.get_point_position(0) != Vector2(0.0, 0.0): return false
+	if transition_curve.get_point_position(0) != Vector2(0.0, 0.0):
+		printerr("%s: Tween Curve first point is not (0.0, 0.0) %s" % [self, self.name])
+		return false
 	# Check if the last point is at the max of the curve
-	if transition_curve.get_point_position(transition_curve.point_count - 1) != Vector2(1.0, 1.0): return false
+	if transition_curve.get_point_position(transition_curve.point_count - 1) != Vector2(1.0, 1.0):
+		printerr("%s: Tween Curve last point is not (1.0, 1.0) %s" % [self, self.name])
+		return false
 	
 	return true
 

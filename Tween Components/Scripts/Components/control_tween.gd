@@ -74,4 +74,7 @@ func has_errors() -> bool:
 		printerr("%s: No node assigned to %s, and attempted to run." % [self, self.name])
 		return true
 	
+	if use_custom_curve and !curve_is_valid():
+		return true
+	
 	return false
