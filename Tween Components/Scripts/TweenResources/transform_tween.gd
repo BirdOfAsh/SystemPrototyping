@@ -1,3 +1,4 @@
+@tool
 class_name TransformTween extends TweenResource
 
 
@@ -40,6 +41,12 @@ var current_rotation : float
 ## The current rotate of the node in rotation_degrees, stored in a variable
 var current_scale : Vector2
 
+## The value the position is reset to in the editor
+var reset_position : Vector2
+## The value the rotation is reset to in the editor
+var reset_rotation : float
+## The value the scale is reset to in the editor
+var reset_scale : Vector2
 #endregion
 
 
@@ -55,6 +62,18 @@ func custom_tween_properties(tween : Tween, tween_duration : float, _affected_no
 	_custom_tween_position(tween, tween_duration, _affected_node, curve, forward)
 	_custom_tween_rotation(tween, tween_duration, _affected_node, curve, forward)
 	_custom_tween_scale(tween, tween_duration, _affected_node, curve, forward)
+
+
+## NOTE: ONLY TO BE USED IN THE EDITOR
+func _reset_values(_affected_node : Node) -> void:
+	if reset_position == null or reset_rotation == null or reset_scale == null :
+		print('tranform')
+		printerr("%s: Some reset value in %s, was not set." % [_affected_node.name, self.get_class()])
+		return
+	
+	_affected_node.position = reset_position
+	_affected_node.rotation = reset_rotation
+	_affected_node.scale = reset_scale
 
 
 #region Transform Functions
@@ -180,3 +199,10 @@ func set_current_values(_affected_node : Node) -> void:
 	current_position = _affected_node.position
 	current_rotation = _affected_node.rotation
 	current_scale = _affected_node.scale
+
+
+## NOTE: ONLY TO BE USED IN THE EDITOR
+func _set_reset_values(_affected_node : Node) -> void:
+	reset_position = _affected_node.position
+	reset_rotation = _affected_node.rotation
+	reset_scale = _affected_node.scale

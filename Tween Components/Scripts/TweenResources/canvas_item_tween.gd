@@ -1,3 +1,4 @@
+@tool
 class_name CanvasItemTween extends TweenResource
 
 #region CanvasItem Properties
@@ -12,6 +13,9 @@ class_name CanvasItemTween extends TweenResource
 @export var end_modulate : Color = Color.WHITE
 
 var current_modulate : Color
+
+## The value the modulate is reset to in the editor
+var reset_modulate : Color
 #endregion
 
 ## Call to tween each of the individual canvas item properties (modulate)
@@ -22,6 +26,15 @@ func tween_properties(tween : Tween, tween_duration : float, _affected_node : No
 ## Call to tween each of the individual canvas item properties (modulate) with a custom transition curve
 func custom_tween_properties(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
 	_custom_tween_modulate(tween, tween_duration, _affected_node, curve, forward)
+
+
+## NOTE: ONLY TO BE USED IN THE EDITOR
+func _reset_values(_affected_node : CanvasItem) -> void:
+	if reset_modulate == null:
+		printerr("%s: Some reset value in %s, was not set." % [_affected_node.name, self.get_class()])
+		return
+	
+	_affected_node.modulate = reset_modulate
 
 
 #region Canvas Item Functions
@@ -59,5 +72,10 @@ func _custom_tween_modulate(tween : Tween, tween_duration : float, _affected_nod
 
 
 ## Set the current canvas item values when the tween is run
-func set_current_values(_affected_node : Node) -> void:
+func set_current_values(_affected_node : CanvasItem) -> void:
 	current_modulate = _affected_node.modulate
+
+
+## NOTE: ONLY TO BE USED IN THE EDITOR
+func _set_reset_values(_affected_node : CanvasItem) -> void:
+	reset_modulate = _affected_node.modulate

@@ -1,4 +1,6 @@
-@abstract class_name TweenComponent extends Node
+@tool
+@abstract
+class_name TweenComponent extends Node
 ## The TweenComponent class is an abstract class meant to be used to build out other
 ## tween component classes. [br]
 ## This class contains all of the information relating to the tween including

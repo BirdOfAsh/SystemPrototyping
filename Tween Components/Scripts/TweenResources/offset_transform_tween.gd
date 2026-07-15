@@ -1,3 +1,4 @@
+@tool
 class_name OffsetTransformTween extends TweenResource
 
 
@@ -42,6 +43,12 @@ var current_offset_rotation : float
 ## The current rotate of the node in rotation_degrees, stored in a variable
 var current_offset_scale : Vector2
 
+## The value the offset position is reset to in the editor
+var reset_offset_position : Vector2
+## The value the offset rotation is reset to in the editor
+var reset_offset_rotation : float
+## The value the offset scale is reset to in the editor
+var reset_offset_scale : Vector2
 #endregion
 
 
@@ -57,6 +64,21 @@ func custom_tween_properties(tween : Tween, tween_duration : float, _affected_no
 	_custom_tween_offset_position(tween, tween_duration, _affected_node, curve, forward)
 	_custom_tween_offset_rotation(tween, tween_duration, _affected_node, curve, forward)
 	_custom_tween_offset_scale(tween, tween_duration, _affected_node, curve, forward)
+
+
+## NOTE: ONLY TO BE USED IN THE EDITOR
+func _reset_values(_affected_node : Node) -> void:
+	if reset_offset_position == null or reset_offset_rotation  == null or reset_offset_scale  == null:
+		print('offset_tranform')
+		print(reset_offset_position)
+		print(reset_offset_rotation)
+		print(reset_offset_scale)
+		printerr("%s: Some reset value in %s, was not set." % [_affected_node.name, self.get_class()])
+		return
+	
+	_affected_node.offset_transform_position = reset_offset_position
+	_affected_node.offset_transform_rotation = reset_offset_rotation
+	_affected_node.offset_transform_scale = reset_offset_scale
 
 
 #region Offset Transform Functions
@@ -182,3 +204,10 @@ func set_current_values(_affected_node : Control) -> void:
 	current_offset_position = _affected_node.offset_transform_position
 	current_offset_rotation = _affected_node.offset_transform_rotation
 	current_offset_scale = _affected_node.offset_transform_scale
+
+
+## NOTE: ONLY TO BE USED IN THE EDITOR
+func _set_reset_values(_affected_node : Control) -> void:
+	reset_offset_position = _affected_node.offset_transform_position
+	reset_offset_rotation = _affected_node.offset_transform_rotation
+	reset_offset_scale = _affected_node.offset_transform_scale

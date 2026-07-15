@@ -38,6 +38,8 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+offset_transform_enabled = true
 
 [node name="ControlNodeEffect" type="Node" parent="Control" unique_id=282090064 node_paths=PackedStringArray("affected_node")]
 script = ExtResource("1_m4g0h")
@@ -45,6 +47,7 @@ affected_node = NodePath("..")
 transform_tween = SubResource("Resource_5h6k7")
 canvas_item_tween = SubResource("Resource_84d66")
 offset_transform_tween = SubResource("Resource_m4g0h")
+loop = true
 autostart = true
 use_custom_curve = true
 transition_curve = SubResource("Curve_5uyih")
