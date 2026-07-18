@@ -5,11 +5,11 @@ class_name Node2DTween extends TweenComponent
 ## transform and [CanvasItem] parameters.
 
 ## Plays the tween in the editor, and resets once complete
-@export_tool_button("Play Tween", "Play") var play_tween_button : Callable = do_tween
+@export_tool_button("Play Tween", "Play") var play_tween_button : Callable = _do_editor_tween
 ## Resets the tween immediately
-@export_tool_button("Reset Tween", "Stop") var reset_tween_button : Callable = do_tween
+@export_tool_button("Reset Tween", "Stop") var reset_tween_button : Callable = _reset_values
 ## Sets the value that the reset button goes to
-@export_tool_button("Set Reset Values", "KeyValue") var set_reset_value_button : Callable = do_tween
+@export_tool_button("Set Reset Values", "KeyValue") var set_reset_value_button : Callable = _set_reset_values
 ## The node which will have the effect applied.
 @export var affected_node : Node2D
 ## The transform tween resource
@@ -53,11 +53,8 @@ func do_tween(forward : bool = true) -> void:
 
 
 func _do_editor_tween() -> void:
-	if loop:
-		do_tween()
-	else:
-		await do_tween()
-		_reset_values()
+	affected_node.offset_transform_enabled = true
+	do_tween()
 
 
 ## Wrapper to call the tween functions from all the tween resources

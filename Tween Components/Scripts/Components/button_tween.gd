@@ -1,5 +1,6 @@
+@tool
 class_name ButtonEffect extends ControlTween
-## [ButtonEffect] is an extension of [ControlNodeEffect] designed to be used 
+## [ButtonEffect] is an extension of [ControlTween] designed to be used for buttons
 
 @export_enum(
 			'On Mouse Enter and Exit',

@@ -1,6 +1,14 @@
+@tool
 class_name ControlTweenSequencer extends Node
 ## The purpose of [ControlTweenSequencer] is to hold and call a series of [ControlTween]
 ## in sequence, to allow for the more complex tween animation.
+
+## Plays the tween in the editor, and resets once complete
+@export_tool_button("Play Tween", "Play") var play_tween_button : Callable = do_tween_sequence
+## Resets the tween immediately
+@export_tool_button("Reset Tween", "Stop") var reset_tween_button : Callable = _reset_values
+## Sets the value that the reset button goes to
+@export_tool_button("Set Reset Values", "KeyValue") var set_reset_value_button : Callable = _set_reset_values
 
 ## The node which was have a sequence of effects applied
 @export var affected_node : Control
@@ -57,3 +65,17 @@ func do_tween_sequence() -> void:
 func stop_sequence() -> void:
 	for control_tween : ControlTween in tween_array:
 		control_tween._stop_tween()
+
+
+func _reset_values() -> void:
+	if !affected_node: return
+	if tween_array.is_empty(): return
+	
+	tween_array[0]._reset_values()
+
+
+func _set_reset_values() -> void:
+	if !affected_node: return
+	if tween_array.is_empty(): return
+	
+	tween_array[0]._set_reset_values()

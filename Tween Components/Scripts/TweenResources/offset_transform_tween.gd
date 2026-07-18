@@ -69,10 +69,6 @@ func custom_tween_properties(tween : Tween, tween_duration : float, _affected_no
 ## NOTE: ONLY TO BE USED IN THE EDITOR
 func _reset_values(_affected_node : Node) -> void:
 	if reset_offset_position == null or reset_offset_rotation  == null or reset_offset_scale  == null:
-		print('offset_tranform')
-		print(reset_offset_position)
-		print(reset_offset_rotation)
-		print(reset_offset_scale)
 		printerr("%s: Some reset value in %s, was not set." % [_affected_node.name, self.get_class()])
 		return
 	
@@ -108,8 +104,8 @@ func _tween_offset_rotation(tween : Tween, tween_duration : float, _affected_nod
 	# Tween rotation
 	tween.tween_property(
 		_affected_node,
-		"rotation_degrees",
-		(end_offset_rotation if end_offset_rotation != INF else current_offset_rotation) if forward else (start_offset_rotation if start_offset_rotation != INF else current_offset_rotation),
+		"offset_transform_rotation",
+		(deg_to_rad(end_offset_rotation) if end_offset_rotation != INF else current_offset_rotation) if forward else (deg_to_rad(start_offset_rotation) if start_offset_rotation != INF else current_offset_rotation),
 		tween_duration
 		).from(
 			(start_offset_rotation if start_offset_rotation != INF else current_offset_rotation) if forward else (end_offset_rotation if end_offset_rotation != INF else current_offset_rotation)
@@ -120,7 +116,7 @@ func _tween_offset_scale(tween : Tween, tween_duration : float, _affected_node :
 	# Tween scale.x
 	tween.tween_property(
 		_affected_node,
-		"scale:x",
+		"offset_transform_scale:x",
 		(end_offset_scale.x if end_offset_scale.x != INF else current_offset_scale.x) if forward else (start_offset_scale.x if start_offset_scale.x != INF else current_offset_scale.x),
 		tween_duration
 		).from(
@@ -130,7 +126,7 @@ func _tween_offset_scale(tween : Tween, tween_duration : float, _affected_node :
 	# Tween scale.y
 	tween.tween_property(
 		_affected_node,
-		"scale:y",
+		"offset_transform_scale:y",
 		(end_offset_scale.y if end_offset_scale.y != INF else current_offset_scale.y) if forward else (start_offset_scale.y if start_offset_scale.y != INF else current_offset_scale.y),
 		tween_duration
 		).from(
@@ -162,7 +158,9 @@ func _custom_tween_offset_position(tween : Tween, tween_duration : float, _affec
 
 func _custom_tween_offset_rotation(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
 	# Set the starting from -> this exists because MethodTweener does not have the .from() function
-	var starting_rot : float = (start_offset_rotation if start_offset_rotation != INF else current_offset_rotation) if forward else (end_offset_rotation if end_offset_rotation != INF else current_offset_rotation)
+	var starting_rot : float = (deg_to_rad(start_offset_rotation) if start_offset_rotation != INF else current_offset_rotation) if forward else (deg_to_rad(end_offset_rotation) if end_offset_rotation != INF else current_offset_rotation)
+	print(starting_rot)
+	print(rad_to_deg(starting_rot))
 	(_affected_node as Control).offset_transform_rotation = starting_rot
 	
 	# Tween along the curve and lerp towards the sampled point
@@ -170,6 +168,7 @@ func _custom_tween_offset_rotation(tween : Tween, tween_duration : float, _affec
 		func (progress : float): # DON'T WORRY ABOUT IT JUST PASSES IN PROGRESS -> PROGRESS IS A NUMBER FROM THE MIN TO MAX VALUES
 			var curve_progress : float = curve.sample_baked(progress)
 			var target_rot : float = (end_offset_rotation if end_offset_rotation != INF else current_offset_rotation) if forward else (start_offset_rotation if start_offset_rotation != INF else current_offset_rotation)
+			target_rot = deg_to_rad(target_rot)
 			(_affected_node as Control).offset_transform_rotation = lerpf(starting_rot, target_rot, curve_progress)
 			,
 		curve.min_domain,

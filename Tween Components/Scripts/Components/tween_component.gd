@@ -15,19 +15,58 @@ class_name TweenComponent extends Node
 @export var autostart : bool = false
 
 @export_category("Transition Parameters")
+## Toggles if the [transition_curve] should be used as the transition type
+@export var use_custom_curve : bool = false:
+	set(value):
+		use_custom_curve = value
+		update_configuration_warnings()
+		notify_property_list_changed()
+## The custom curve transition
+@export var transition_curve : Curve:
+	set(value):
+		transition_curve = value
+		update_configuration_warnings()
 ## Type of [TransitionType] of the tween.
 @export var trans_type : Tween.TransitionType
 ## Type of [EaseType] of the tween.
 @export var ease_type : Tween.EaseType
 ## Duration of the tween as a [float].
 @export var tween_duration : float = 1.0
-## Toggles if the [transition_curve] should be used as the transition type
-@export var use_custom_curve : bool = false
-## The custom curve transition
-@export var transition_curve : Curve
+
 
 ## The variable holding the tween.
 var tween : Tween
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings : PackedStringArray = []
+	
+	if use_custom_curve:
+		if transition_curve == null:
+			warnings.append("No transition curve!")
+		if transition_curve != null and transition_curve.get_point_position(0) != Vector2(0.0, 0.0):
+			warnings.append("Curve's first point needs to start at (0.0, 0.0)!")
+		if transition_curve != null and transition_curve.get_point_position(transition_curve.point_count - 1) != Vector2(1.0, 1.0):
+			warnings.append("Curve's last point needs to end at (1.0, 1.0)!")
+	#TODO: update warning when changing points value
+	return warnings
+
+
+
+func _validate_property(property: Dictionary) -> void:
+	if not use_custom_curve:
+		match property.name:
+			"transition_curve":
+				property.usage &= ~PROPERTY_USAGE_EDITOR
+	else:
+		match property.name:
+			"trans_type":
+				property.usage &= ~PROPERTY_USAGE_EDITOR
+				trans_type = Tween.TransitionType.TRANS_LINEAR
+			"ease_type":
+				property.usage &= ~PROPERTY_USAGE_EDITOR
+				ease_type = Tween.EaseType.EASE_IN
+
 
 
 func _ready() -> void:

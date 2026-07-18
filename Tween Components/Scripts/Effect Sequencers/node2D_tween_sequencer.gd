@@ -1,6 +1,14 @@
+@tool
 class_name Node2DEffectSequencer extends Node
 ## The purpose of [Node2DEffectSequencer] is to hold and call a series of [Node2DEffect]
 ## in sequence, to allow for the more complex tween animation.
+
+## Plays the tween in the editor, and resets once complete
+@export_tool_button("Play Tween", "Play") var play_tween_button : Callable = do_tween_sequence
+## Resets the tween immediately
+@export_tool_button("Reset Tween", "Stop") var reset_tween_button : Callable = _reset_values
+## Sets the value that the reset button goes to
+@export_tool_button("Set Reset Values", "KeyValue") var set_reset_value_button : Callable = _set_reset_values
 
 ## The node which was have a sequence of effects applied
 @export var affected_node : Node2D
@@ -58,3 +66,17 @@ func do_tween_sequence() -> void:
 func stop_sequence() -> void:
 	for node2D_tween : Node2DTween in tween_array:
 		node2D_tween._stop_tween()
+
+
+func _reset_values() -> void:
+	if !affected_node: return
+	if tween_array.is_empty(): return
+	
+	tween_array[0]._reset_values()
+
+
+func _set_reset_values() -> void:
+	if !affected_node: return
+	if tween_array.is_empty(): return
+	
+	tween_array[0]._set_reset_values()

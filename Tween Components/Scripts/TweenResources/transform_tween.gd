@@ -140,7 +140,7 @@ func _custom_tween_position(tween : Tween, tween_duration : float, _affected_nod
 	# Set the starting from -> this exists because MethodTweener does not have the .from() function
 	var starting_pos_x : float = (start_position.x if start_position.x != INF else current_position.x) if forward else (end_position.x if end_position.x != INF else current_position.x)
 	var starting_pos_y : float = (start_position.y if start_position.y != INF else current_position.y) if forward else (end_position.y if end_position.y != INF else current_position.y)
-	(_affected_node as Control).offset_transform_position = Vector2(starting_pos_x, starting_pos_y)
+	_affected_node.position = Vector2(starting_pos_x, starting_pos_y)
 	
 	# Tween along the curve and lerp towards the sampled point
 	tween.tween_method(
@@ -148,7 +148,7 @@ func _custom_tween_position(tween : Tween, tween_duration : float, _affected_nod
 			var curve_progress : float = curve.sample_baked(progress)
 			var target_pos_x : float = (end_position.x if end_position.x != INF else current_position.x) if forward else (start_position.x if start_position.x != INF else current_position.x)
 			var target_pos_y : float = (end_position.y if end_position.y != INF else current_position.y) if forward else (start_position.y if start_position.y != INF else current_position.y)
-			(_affected_node as Control).offset_transform_position = (Vector2(starting_pos_x, starting_pos_y)).lerp(Vector2(target_pos_x, target_pos_y), curve_progress)
+			_affected_node.position = (Vector2(starting_pos_x, starting_pos_y)).lerp(Vector2(target_pos_x, target_pos_y), curve_progress)
 			,
 		curve.min_domain,
 		curve.max_domain,
@@ -159,14 +159,14 @@ func _custom_tween_position(tween : Tween, tween_duration : float, _affected_nod
 func _custom_tween_rotation(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
 	# Set the starting from -> this exists because MethodTweener does not have the .from() function
 	var starting_rot : float = (start_rotation if start_rotation != INF else current_rotation) if forward else (end_rotation if end_rotation != INF else current_rotation)
-	(_affected_node as Control).offset_transform_rotation = starting_rot
+	_affected_node.rotation_degrees = starting_rot
 	
 	# Tween along the curve and lerp towards the sampled point
 	tween.tween_method(
 		func (progress : float): # DON'T WORRY ABOUT IT JUST PASSES IN PROGRESS -> PROGRESS IS A NUMBER FROM THE MIN TO MAX VALUES
 			var curve_progress : float = curve.sample_baked(progress)
 			var target_rot : float = (end_rotation if end_rotation != INF else current_rotation) if forward else (start_rotation if start_rotation != INF else current_rotation)
-			(_affected_node as Control).offset_transform_rotation = lerpf(starting_rot, target_rot, curve_progress)
+			_affected_node.rotation_degrees = lerpf(starting_rot, target_rot, curve_progress)
 			,
 		curve.min_domain,
 		curve.max_domain,
@@ -178,7 +178,7 @@ func _custom_tween_scale(tween : Tween, tween_duration : float, _affected_node :
 	# Set the starting from -> this exists because MethodTweener does not have the .from() function
 	var starting_scale_x : float = (start_scale.x if start_scale.x != INF else current_scale.x) if forward else (end_scale.x if end_scale.x != INF else current_scale.x)
 	var starting_scale_y : float = (start_scale.y if start_scale.y != INF else current_scale.y) if forward else (end_scale.y if end_scale.y != INF else current_scale.y)
-	(_affected_node as Control).offset_transform_scale = Vector2(starting_scale_x, starting_scale_y)
+	_affected_node.scale = Vector2(starting_scale_x, starting_scale_y)
 	
 	# Tween along the curve and lerp towards the sampled point
 	tween.tween_method(
@@ -186,7 +186,7 @@ func _custom_tween_scale(tween : Tween, tween_duration : float, _affected_node :
 			var curve_progress : float = curve.sample_baked(progress)
 			var target_scale_x : float = (end_scale.x if end_scale.x != INF else current_scale.x) if forward else (start_scale.x if start_scale.x != INF else current_scale.x)
 			var target_scale_y : float = (end_scale.y if end_scale.y != INF else current_scale.y) if forward else (start_scale.y if start_scale.y != INF else current_scale.y)
-			(_affected_node as Control).offset_transform_position = (Vector2(starting_scale_x, starting_scale_y)).lerp(Vector2(target_scale_x, target_scale_y), curve_progress)
+			_affected_node.scale = (Vector2(starting_scale_x, starting_scale_y)).lerp(Vector2(target_scale_x, target_scale_y), curve_progress)
 			,
 		curve.min_domain,
 		curve.max_domain,
