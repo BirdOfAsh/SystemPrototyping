@@ -68,6 +68,7 @@ func custom_tween_properties(tween : Tween, tween_duration : float, _affected_no
 
 ## NOTE: ONLY TO BE USED IN THE EDITOR
 func _reset_values(_affected_node : Node) -> void:
+	# TODO : DOESN'T CURRENTLY WORK
 	if reset_offset_position == null or reset_offset_rotation  == null or reset_offset_scale  == null:
 		printerr("%s: Some reset value in %s, was not set." % [_affected_node.name, self.get_class()])
 		return
@@ -79,6 +80,7 @@ func _reset_values(_affected_node : Node) -> void:
 
 #region Offset Transform Functions
 func _tween_offset_position(tween : Tween, tween_duration : float, _affected_node : Node, forward : bool = true) -> void:
+	if start_offset_position == end_offset_position: return
 	# Tween position.x
 	tween.tween_property(
 		_affected_node,
@@ -101,6 +103,7 @@ func _tween_offset_position(tween : Tween, tween_duration : float, _affected_nod
 
 
 func _tween_offset_rotation(tween : Tween, tween_duration : float, _affected_node : Node, forward : bool = true) -> void:
+	if start_offset_rotation == end_offset_rotation: return
 	# Tween rotation
 	tween.tween_property(
 		_affected_node,
@@ -108,11 +111,12 @@ func _tween_offset_rotation(tween : Tween, tween_duration : float, _affected_nod
 		(deg_to_rad(end_offset_rotation) if end_offset_rotation != INF else current_offset_rotation) if forward else (deg_to_rad(start_offset_rotation) if start_offset_rotation != INF else current_offset_rotation),
 		tween_duration
 		).from(
-			(start_offset_rotation if start_offset_rotation != INF else current_offset_rotation) if forward else (end_offset_rotation if end_offset_rotation != INF else current_offset_rotation)
+			(deg_to_rad(start_offset_rotation) if start_offset_rotation != INF else current_offset_rotation) if forward else (deg_to_rad(end_offset_rotation) if end_offset_rotation != INF else current_offset_rotation)
 			)
 
 
 func _tween_offset_scale(tween : Tween, tween_duration : float, _affected_node : Node, forward : bool = true) -> void:
+	if start_offset_scale == end_offset_scale: return
 	# Tween scale.x
 	tween.tween_property(
 		_affected_node,
@@ -137,6 +141,7 @@ func _tween_offset_scale(tween : Tween, tween_duration : float, _affected_node :
 
 #region Custom Offset Transform Functions
 func _custom_tween_offset_position(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
+	if start_offset_position == end_offset_position: return
 	# Set the starting from -> this exists because MethodTweener does not have the .from() function
 	var starting_pos_x : float = (start_offset_position.x if start_offset_position.x != INF else current_offset_position.x) if forward else (end_offset_position.x if end_offset_position.x != INF else current_offset_position.x)
 	var starting_pos_y : float = (start_offset_position.y if start_offset_position.y != INF else current_offset_position.y) if forward else (end_offset_position.y if end_offset_position.y != INF else current_offset_position.y)
@@ -157,10 +162,9 @@ func _custom_tween_offset_position(tween : Tween, tween_duration : float, _affec
 
 
 func _custom_tween_offset_rotation(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
+	if start_offset_rotation == end_offset_rotation: return
 	# Set the starting from -> this exists because MethodTweener does not have the .from() function
 	var starting_rot : float = (deg_to_rad(start_offset_rotation) if start_offset_rotation != INF else current_offset_rotation) if forward else (deg_to_rad(end_offset_rotation) if end_offset_rotation != INF else current_offset_rotation)
-	print(starting_rot)
-	print(rad_to_deg(starting_rot))
 	(_affected_node as Control).offset_transform_rotation = starting_rot
 	
 	# Tween along the curve and lerp towards the sampled point
@@ -178,6 +182,7 @@ func _custom_tween_offset_rotation(tween : Tween, tween_duration : float, _affec
 
 
 func _custom_tween_offset_scale(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
+	if start_offset_scale == end_offset_scale: return
 	# Set the starting from -> this exists because MethodTweener does not have the .from() function
 	var starting_scale_x : float = (start_offset_scale.x if start_offset_scale.x != INF else current_offset_scale.x) if forward else (end_offset_scale.x if end_offset_scale.x != INF else current_offset_scale.x)
 	var starting_scale_y : float = (start_offset_scale.y if start_offset_scale.y != INF else current_offset_scale.y) if forward else (end_offset_scale.y if end_offset_scale.y != INF else current_offset_scale.y)

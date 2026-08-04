@@ -67,7 +67,6 @@ func custom_tween_properties(tween : Tween, tween_duration : float, _affected_no
 ## NOTE: ONLY TO BE USED IN THE EDITOR
 func _reset_values(_affected_node : Node) -> void:
 	if reset_position == null or reset_rotation == null or reset_scale == null :
-		print('tranform')
 		printerr("%s: Some reset value in %s, was not set." % [_affected_node.name, self.get_class()])
 		return
 	
@@ -78,6 +77,7 @@ func _reset_values(_affected_node : Node) -> void:
 
 #region Transform Functions
 func _tween_position(tween : Tween, tween_duration : float, _affected_node : Node, forward : bool = true) -> void:
+	if start_position == end_position: return
 	# Tween the positions if not default
 	if start_position.x != end_position.x:
 		tween.tween_property(
@@ -100,6 +100,7 @@ func _tween_position(tween : Tween, tween_duration : float, _affected_node : Nod
 
 
 func _tween_rotation(tween : Tween, tween_duration : float, _affected_node : Node, forward : bool = true) -> void:
+	if start_rotation == end_rotation: return
 	# Tween the rotation if not default
 	if start_rotation != end_rotation:
 		tween.tween_property(
@@ -113,6 +114,7 @@ func _tween_rotation(tween : Tween, tween_duration : float, _affected_node : Nod
 
 
 func _tween_scale(tween : Tween, tween_duration : float, _affected_node : Node, forward : bool = true) -> void:
+	if start_scale == end_scale: return
 	# Tween the scale if not default
 	if start_scale.x != end_scale.x:
 		tween.tween_property(
@@ -137,6 +139,7 @@ func _tween_scale(tween : Tween, tween_duration : float, _affected_node : Node, 
 
 #region Custom Transform Functions
 func _custom_tween_position(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
+	if start_position == end_position: return
 	# Set the starting from -> this exists because MethodTweener does not have the .from() function
 	var starting_pos_x : float = (start_position.x if start_position.x != INF else current_position.x) if forward else (end_position.x if end_position.x != INF else current_position.x)
 	var starting_pos_y : float = (start_position.y if start_position.y != INF else current_position.y) if forward else (end_position.y if end_position.y != INF else current_position.y)
@@ -157,6 +160,7 @@ func _custom_tween_position(tween : Tween, tween_duration : float, _affected_nod
 
 
 func _custom_tween_rotation(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
+	if start_rotation == end_rotation: return
 	# Set the starting from -> this exists because MethodTweener does not have the .from() function
 	var starting_rot : float = (start_rotation if start_rotation != INF else current_rotation) if forward else (end_rotation if end_rotation != INF else current_rotation)
 	_affected_node.rotation_degrees = starting_rot
@@ -175,6 +179,7 @@ func _custom_tween_rotation(tween : Tween, tween_duration : float, _affected_nod
 
 
 func _custom_tween_scale(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
+	if start_scale == end_scale: return
 	# Set the starting from -> this exists because MethodTweener does not have the .from() function
 	var starting_scale_x : float = (start_scale.x if start_scale.x != INF else current_scale.x) if forward else (end_scale.x if end_scale.x != INF else current_scale.x)
 	var starting_scale_y : float = (start_scale.y if start_scale.y != INF else current_scale.y) if forward else (end_scale.y if end_scale.y != INF else current_scale.y)

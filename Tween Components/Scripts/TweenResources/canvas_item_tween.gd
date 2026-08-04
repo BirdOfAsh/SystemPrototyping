@@ -44,24 +44,24 @@ func _tween_modulate(tween : Tween, tween_duration : float, _affected_node : Nod
 		tween.tween_property(
 			_affected_node,
 			"modulate",
-			(end_modulate if end_modulate != Color.WHITE else current_modulate) if forward else (start_modulate if start_modulate != Color.WHITE else current_modulate),
+			end_modulate if forward else start_modulate,
 			tween_duration
 		).from(
-			(start_modulate if start_modulate != Color.WHITE else current_modulate) if forward else (end_modulate if end_modulate != Color.WHITE else current_modulate)
+			start_modulate if forward else end_modulate
 		)
 #endregion
 
 #region Custom Canvas Item Functions
 func _custom_tween_modulate(tween : Tween, tween_duration : float, _affected_node : Node, curve : Curve, forward : bool = true) -> void:
 	# Set the starting from -> this exists because MethodTweener does not have the .from() function
-	var starting_mod : Color = (start_modulate if start_modulate != Color.WHITE else current_modulate) if forward else (end_modulate if end_modulate != Color.WHITE else current_modulate)
+	var starting_mod : Color = start_modulate if forward else end_modulate
 	(_affected_node as Control).modulate = starting_mod
 	
 	# Tween along the curve and lerp towards the sampled point
 	tween.tween_method(
 		func (progress : float): # DON'T WORRY ABOUT IT JUST PASSES IN PROGRESS -> PROGRESS IS A NUMBER FROM THE MIN TO MAX VALUES
 			var curve_progress : float = curve.sample_baked(progress)
-			var target_mod : Color = (end_modulate if end_modulate != Color.WHITE else current_modulate) if forward else (start_modulate if start_modulate != Color.WHITE else current_modulate)
+			var target_mod : Color = end_modulate if forward else start_modulate
 			(_affected_node as Control).modulate = start_modulate.lerp(target_mod, curve_progress)
 			,
 		curve.min_domain,

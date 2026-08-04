@@ -24,6 +24,7 @@ class_name ControlTweenSequencer extends Node
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint(): return
 	# Check if there is a node
 	if !affected_node:
 		return
@@ -70,6 +71,9 @@ func stop_sequence() -> void:
 func _reset_values() -> void:
 	if !affected_node: return
 	if tween_array.is_empty(): return
+	
+	for tween : ControlTween in tween_array:
+		tween._stop_tween()
 	
 	tween_array[0]._reset_values()
 

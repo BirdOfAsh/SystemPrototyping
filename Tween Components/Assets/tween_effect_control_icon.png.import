@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://mms7tsllqfcb"
-path="res://.godot/imported/tween_effect_control_icon.png-f7588942f05de62c05e6d48c18457a2e.ctex"
+path="res://.godot/imported/tween_effect_control_icon.png-c8263612fff8e86ba3dc40eaf6a78671.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tween Components/Assets/tween_effect_control_icon.png"
-dest_files=["res://.godot/imported/tween_effect_control_icon.png-f7588942f05de62c05e6d48c18457a2e.ctex"]
+source_file="res://Tools/Tween Components/Assets/tween_effect_control_icon.png"
+dest_files=["res://.godot/imported/tween_effect_control_icon.png-c8263612fff8e86ba3dc40eaf6a78671.ctex"]
 
 [params]
 

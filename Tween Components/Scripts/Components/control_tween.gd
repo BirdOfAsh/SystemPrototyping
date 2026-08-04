@@ -13,16 +13,30 @@ class_name ControlTween extends TweenComponent
 ## The node which will have the effect applied
 @export var affected_node : Control
 ## The transform tween resource
-@export var transform_tween : TransformTween
+@export var transform_tween : TransformTween:
+	set(new_tween):
+		transform_tween = new_tween
+		if new_tween != null:
+			_set_reset_values()
 ## The canvas item tween resource
-@export var canvas_item_tween : CanvasItemTween
+@export var canvas_item_tween : CanvasItemTween:
+	set(new_tween):
+		canvas_item_tween = new_tween
+		if new_tween != null:
+			_set_reset_values()
 ## The offset transform tween resource
-@export var offset_transform_tween : OffsetTransformTween
+@export var offset_transform_tween : OffsetTransformTween:
+	set(new_tween):
+		offset_transform_tween = new_tween
+		if new_tween != null:
+			_set_reset_values()
 
 
 func _ready() -> void:
 	# Don't run this if you're in the editor
-	if Engine.is_editor_hint(): return
+	if Engine.is_editor_hint():
+		_set_reset_values()
+		return
 	
 	super()
 	if has_errors(): return
@@ -67,40 +81,38 @@ func _do_editor_tween() -> void:
 ## Wrapper to call the tween functions from all the tween resources
 func _tween_values(forward : bool = true) -> void:
 	if !use_custom_curve:
-		transform_tween.tween_properties(tween, tween_duration, affected_node, forward)
-		canvas_item_tween.tween_properties(tween, tween_duration, affected_node, forward)
-		offset_transform_tween.tween_properties(tween, tween_duration, affected_node, forward)
+		if transform_tween != null: transform_tween.tween_properties(tween, tween_duration, affected_node, forward)
+		if canvas_item_tween != null: canvas_item_tween.tween_properties(tween, tween_duration, affected_node, forward)
+		if offset_transform_tween != null: offset_transform_tween.tween_properties(tween, tween_duration, affected_node, forward)
 	else:
-		transform_tween.custom_tween_properties(tween, tween_duration, affected_node, transition_curve, forward)
-		canvas_item_tween.custom_tween_properties(tween, tween_duration, affected_node, transition_curve, forward)
-		offset_transform_tween.custom_tween_properties(tween, tween_duration, affected_node, transition_curve, forward)
+		if transform_tween != null: transform_tween.custom_tween_properties(tween, tween_duration, affected_node, transition_curve, forward)
+		if canvas_item_tween != null: canvas_item_tween.custom_tween_properties(tween, tween_duration, affected_node, transition_curve, forward)
+		if offset_transform_tween != null: offset_transform_tween.custom_tween_properties(tween, tween_duration, affected_node, transition_curve, forward)
 
 
 ## Sets the current transform values to the [member affected_node]
 func set_current_values() -> void:
-	transform_tween.set_current_values(affected_node)
-	canvas_item_tween.set_current_values(affected_node)
-	offset_transform_tween.set_current_values(affected_node)
+	if transform_tween != null: transform_tween.set_current_values(affected_node)
+	if canvas_item_tween != null: canvas_item_tween.set_current_values(affected_node)
+	if offset_transform_tween != null: offset_transform_tween.set_current_values(affected_node)
 
 
 ## Sets the reset values that the [member affected_node] is set to in the editor
 ## NOTE: ONLY TO BE USED IN THE EDITOR
 func _set_reset_values() -> void:
-	print('asdd')
-	transform_tween._set_reset_values(affected_node)
-	canvas_item_tween._set_reset_values(affected_node)
-	offset_transform_tween._set_reset_values(affected_node)
+	if transform_tween != null: transform_tween._set_reset_values(affected_node)
+	if canvas_item_tween != null: canvas_item_tween._set_reset_values(affected_node)
+	if offset_transform_tween != null: offset_transform_tween._set_reset_values(affected_node)
 
 
 ## Resets the values to reset value
 ## NOTE: ONLY TO BE USED IN THE EDITOR
 func _reset_values() -> void:
-	print('asd')
 	if loop and tween.is_running():
 		tween.stop()
-	transform_tween._reset_values(affected_node)
-	canvas_item_tween._reset_values(affected_node)
-	offset_transform_tween._reset_values(affected_node)
+	if transform_tween != null: transform_tween._reset_values(affected_node)
+	if canvas_item_tween != null: canvas_item_tween._reset_values(affected_node)
+	if offset_transform_tween != null: offset_transform_tween._reset_values(affected_node)
 
 
 ## Returns a boolean if any errors were found, and gives an error pointing to the issue.
