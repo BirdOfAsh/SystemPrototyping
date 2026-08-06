@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://cct0slx0ktj60" path="res://Tween Components/Scripts/TweenResources/transform_tween.gd" id="2_84d66"]
 [ext_resource type="Texture2D" uid="uid://dmq8bdbng4qog" path="res://icon.svg" id="3_2d5xy"]
 [ext_resource type="Script" uid="uid://dby7depabb4fv" path="res://Tween Components/Scripts/TweenResources/canvas_item_tween.gd" id="3_5uyih"]
+[ext_resource type="Script" uid="uid://dk6ci6cn8li37" path="res://Tween Components/Scripts/Components/node3D_tween.gd" id="5_8c1su"]
+[ext_resource type="Script" uid="uid://bvekgf6tgcfay" path="res://Tween Components/Scripts/TweenResources/transform3d_tween.gd" id="6_5uyih"]
 
 [sub_resource type="Resource" id="Resource_5s0fj"]
 script = ExtResource("2_84d66")
@@ -12,6 +14,13 @@ metadata/_custom_type_script = "uid://cct0slx0ktj60"
 [sub_resource type="Resource" id="Resource_33x8s"]
 script = ExtResource("3_5uyih")
 metadata/_custom_type_script = "uid://dby7depabb4fv"
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+
+[sub_resource type="Resource" id="Resource_g4v7s"]
+script = ExtResource("6_5uyih")
+end_scale = Vector3(2, 2, 2)
+metadata/_custom_type_script = "uid://bvekgf6tgcfay"
 
 [node name="EffectTestScene" type="Node" unique_id=1437132771]
 
@@ -25,3 +34,17 @@ affected_node = NodePath("../Sprite2D")
 transform_tween = SubResource("Resource_5s0fj")
 canvas_item_tween = SubResource("Resource_33x8s")
 metadata/_custom_type_script = "uid://cv1tqomq6d35i"
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1499577106]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D" unique_id=1034604869]
+mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="Node3DTween" type="Node" parent="Node3D" unique_id=330412543 node_paths=PackedStringArray("affected_node")]
+script = ExtResource("5_8c1su")
+affected_node = NodePath("..")
+transform3D_tween = SubResource("Resource_g4v7s")
+trans_type = 10
+ease_type = 2
+tween_duration = 0.2
+metadata/_custom_type_script = "uid://dk6ci6cn8li37"

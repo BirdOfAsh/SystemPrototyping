@@ -22,13 +22,13 @@ class_name ControlTween extends TweenComponent
 @export var canvas_item_tween : CanvasItemTween:
 	set(new_tween):
 		canvas_item_tween = new_tween
-		if new_tween != null:
+		if new_tween != null and affected_node != null:
 			_set_reset_values()
 ## The offset transform tween resource
 @export var offset_transform_tween : OffsetTransformTween:
 	set(new_tween):
 		offset_transform_tween = new_tween
-		if new_tween != null:
+		if new_tween != null and affected_node != null:
 			_set_reset_values()
 
 

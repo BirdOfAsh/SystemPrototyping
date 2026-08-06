@@ -1,6 +1,6 @@
 @tool
-class_name Node2DTweenSequencer extends Node
-## The purpose of [Node2DTweenSequencer] is to hold and call a series of [Node2DEffect]
+class_name Node3DTweenSequencer extends Node
+## The purpose of [Node3DEffectSequencer] is to hold and call a series of [Node2DEffect]
 ## in sequence, to allow for the more complex tween animation.
 
 ## Plays the tween in the editor, and resets once complete
@@ -11,7 +11,7 @@ class_name Node2DTweenSequencer extends Node
 @export_tool_button("Set Reset Values", "KeyValue") var set_reset_value_button : Callable = _set_reset_values
 
 ## The node which was have a sequence of effects applied
-@export var affected_node : Node2D
+@export var affected_node : Node3D
 
 ## Determines if the array of effects will loop once completed
 @export var loop : bool = false
@@ -20,7 +20,7 @@ class_name Node2DTweenSequencer extends Node
 @export var autostart : bool = false
 
 ## Array of held [Node2DEffect]
-@export var tween_array : Array[Node2DTween]
+@export var tween_array : Array[Node3DTween]
 
 
 func _ready() -> void:
@@ -40,21 +40,21 @@ func do_tween_sequence() -> void:
 		printerr(self, "There was no node to apply effects to!")
 		return
 	
-	for node2D_tween : Node2DTween in tween_array:
-		node2D_tween.affected_node = affected_node
+	for node3D_tween : Node3DTween in tween_array:
+		node3D_tween.affected_node = affected_node
 		
 		# Disable loop for all effects
-		if node2D_tween.loop:
-			node2D_tween.loop = false
-			printerr(node2D_tween, "Set loop to false, does not apply when played in sequence.")
+		if node3D_tween.loop:
+			node3D_tween.loop = false
+			printerr(node3D_tween, "Set loop to false, does not apply when played in sequence.")
 		
 		# Disable autostart for all effects
-		if node2D_tween.autostart:
-			node2D_tween.autostart = false
-			printerr(node2D_tween, "Set autostart to false, does not apply when played in sequence.")
+		if node3D_tween.autostart:
+			node3D_tween.autostart = false
+			printerr(node3D_tween, "Set autostart to false, does not apply when played in sequence.")
 		
-		node2D_tween.do_tween()
-		await node2D_tween.tween.finished
+		node3D_tween.do_tween()
+		await node3D_tween.tween.finished
 		
 	
 	# We loopin
@@ -64,8 +64,8 @@ func do_tween_sequence() -> void:
 
 ## Stops the sequence by killing every tween in the array of [member effect_array]
 func stop_sequence() -> void:
-	for node2D_tween : Node2DTween in tween_array:
-		node2D_tween._stop_tween()
+	for node3D_tween : Node3DTween in tween_array:
+		node3D_tween._stop_tween()
 
 
 func _reset_values() -> void:
