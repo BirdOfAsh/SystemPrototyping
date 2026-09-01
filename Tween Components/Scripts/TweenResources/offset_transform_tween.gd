@@ -43,12 +43,26 @@ var current_offset_rotation : float
 ## The current rotate of the node in rotation_degrees, stored in a variable
 var current_offset_scale : Vector2
 
+## The scale amount is the scale the tween will start at. [br]
+## Has INF values by default, and will ignore individual x or y if left unchanged.
+@export var start_offset_ratio : float = INF
+
+## The scale amount is the scale the tween will end at. [br]
+## Has INF values by default, and will ignore individual x or y if left unchanged.
+@export var end_offset_ratio : float = INF
+
+## The current rotate of the node in rotation_degrees, stored in a variable
+var current_offset_ratio : float
+
+
 ## The value the offset position is reset to in the editor
 var reset_offset_position : Vector2
 ## The value the offset rotation is reset to in the editor
 var reset_offset_rotation : float
 ## The value the offset scale is reset to in the editor
 var reset_offset_scale : Vector2
+## The value the offset ratio is reset to in the editor
+var reset_offset_ratio : float
 #endregion
 
 

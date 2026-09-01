@@ -48,3 +48,10 @@ trans_type = 10
 ease_type = 2
 tween_duration = 0.2
 metadata/_custom_type_script = "uid://dk6ci6cn8li37"
+
+[node name="Control" type="Control" parent="." unique_id=2111736628]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+offset_transform_enabled = true

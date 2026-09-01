@@ -16,7 +16,7 @@ class_name ControlTween extends TweenComponent
 @export var transform_tween : TransformTween:
 	set(new_tween):
 		transform_tween = new_tween
-		if new_tween != null:
+		if new_tween != null and affected_node != null:
 			_set_reset_values()
 ## The canvas item tween resource
 @export var canvas_item_tween : CanvasItemTween:
