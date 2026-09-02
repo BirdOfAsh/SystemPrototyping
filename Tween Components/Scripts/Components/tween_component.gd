@@ -98,6 +98,12 @@ func _stop_tween() -> void:
 		tween.kill()
 
 
+## Kill a tween if it is empty to prevent giving an error.
+func _kill_empty_tween() -> void:
+	if !tween.has_tweeners():
+		_stop_tween()
+
+
 ## Returns if a curve is valid. [br]
 ## A curve is valid of it has points at the min and max of the curve, so the whole curve can be traversed.
 func curve_is_valid() -> bool:

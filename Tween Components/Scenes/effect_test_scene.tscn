@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://dby7depabb4fv" path="res://Tween Components/Scripts/TweenResources/canvas_item_tween.gd" id="3_5uyih"]
 [ext_resource type="Script" uid="uid://dk6ci6cn8li37" path="res://Tween Components/Scripts/Components/node3D_tween.gd" id="5_8c1su"]
 [ext_resource type="Script" uid="uid://bvekgf6tgcfay" path="res://Tween Components/Scripts/TweenResources/transform3d_tween.gd" id="6_5uyih"]
+[ext_resource type="Script" uid="uid://c0eq70gyg7rhf" path="res://Tween Components/Scripts/Components/control_tween.gd" id="7_3rld2"]
+[ext_resource type="Script" uid="uid://cdere083tmmuo" path="res://Tween Components/Scripts/TweenResources/offset_transform_tween.gd" id="8_5l263"]
 
 [sub_resource type="Resource" id="Resource_5s0fj"]
 script = ExtResource("2_84d66")
@@ -22,9 +24,15 @@ script = ExtResource("6_5uyih")
 end_scale = Vector3(2, 2, 2)
 metadata/_custom_type_script = "uid://bvekgf6tgcfay"
 
+[sub_resource type="Resource" id="Resource_5uyih"]
+script = ExtResource("8_5l263")
+end_offset_position_ratio = Vector2(1, 1)
+metadata/_custom_type_script = "uid://cdere083tmmuo"
+
 [node name="EffectTestScene" type="Node" unique_id=1437132771]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=154401045]
+visible = false
 position = Vector2(552, 315)
 texture = ExtResource("3_2d5xy")
 
@@ -51,7 +59,35 @@ metadata/_custom_type_script = "uid://dk6ci6cn8li37"
 
 [node name="Control" type="Control" parent="." unique_id=2111736628]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
 offset_transform_enabled = true
+
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1301092259]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+texture = ExtResource("3_2d5xy")
+
+[node name="ControlTween" type="Node" parent="Control/TextureRect" unique_id=499392315 node_paths=PackedStringArray("affected_node")]
+script = ExtResource("7_3rld2")
+affected_node = NodePath("..")
+offset_transform_tween = SubResource("Resource_5uyih")
+autostart = true
+metadata/_custom_type_script = "uid://c0eq70gyg7rhf"
