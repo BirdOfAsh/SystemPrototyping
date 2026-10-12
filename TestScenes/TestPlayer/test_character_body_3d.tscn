@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://clrsx6gv2par8"]
+
+[ext_resource type="Script" uid="uid://2iql3m3u8lc5" path="res://TestScenes/TestPlayer/test_character_body_3d.gd" id="1_bho7f"]
+[ext_resource type="PackedScene" uid="uid://nekq4r2o4b1h" path="res://DyamicDepthOfFieldCamera/dynamic_depth_of_field_camera.tscn" id="2_0evpx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+height = 1.6340332
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=640207907]
+script = ExtResource("1_bho7f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1424742352]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1829834, 0)
+shape = SubResource("CapsuleShape3D_g4v7s")
+
+[node name="Head" type="Node3D" parent="." unique_id=371306687]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7862439, 0)
+
+[node name="DynamicDepthOfFieldCamera" parent="Head" unique_id=1730595217 instance=ExtResource("2_0evpx")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7862439, 0)
