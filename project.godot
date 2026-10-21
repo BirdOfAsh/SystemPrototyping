@@ -27,6 +27,7 @@ window/stretch/mode="canvas_items"
 
 folder_colors={
 "res://Addons/": "gray",
+"res://Content/": "yellow",
 "res://Systems/": "orange",
 "res://Tween Components/": "teal",
 "res://Tween Components/Assets/": "purple",

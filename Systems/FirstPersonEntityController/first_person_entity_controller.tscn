@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://tfl8fm3k6g0h"]
 
 [ext_resource type="Script" uid="uid://cmy43bgf36uvv" path="res://Systems/FirstPersonEntityController/first_person_entity_controller.gd" id="1_2p54s"]
-[ext_resource type="Script" uid="uid://v7cw3raovs7" path="res://Systems/FirstPersonEntityController/Scripts/interaction_raycast.gd" id="2_v76a2"]
 [ext_resource type="Script" uid="uid://jabragni10eb" path="res://Systems/FirstPersonEntityController/StateMachine/BaseClasses/entity_state_machine.gd" id="3_ujxgp"]
 [ext_resource type="Script" uid="uid://ca6fijaiyxwnt" path="res://Systems/FirstPersonEntityController/StateMachine/States/falling_entity_state.gd" id="4_0jl8d"]
 [ext_resource type="Script" uid="uid://co6ke3c5cyosq" path="res://Systems/FirstPersonEntityController/StateMachine/States/idle_entity_state.gd" id="5_4f1bj"]
@@ -19,21 +18,6 @@ shape = SubResource("CapsuleShape3D_g4v7s")
 
 [node name="Head" type="Node3D" parent="." unique_id=37865752]
 unique_name_in_owner = true
-
-[node name="Camera3D" type="Camera3D" parent="Head" unique_id=584939132]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50979733, 0)
-
-[node name="InteractionRaycast" type="RayCast3D" parent="Head/Camera3D" unique_id=67140288 node_paths=PackedStringArray("first_person_entity_controller")]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
-visible = false
-target_position = Vector3(0, 0, -3)
-collision_mask = 8
-collide_with_areas = true
-debug_shape_thickness = 1
-script = ExtResource("2_v76a2")
-first_person_entity_controller = NodePath("../../..")
 
 [node name="EntityStateMachine" type="Node" parent="." unique_id=1884200142 node_paths=PackedStringArray("entity", "states")]
 unique_name_in_owner = true
