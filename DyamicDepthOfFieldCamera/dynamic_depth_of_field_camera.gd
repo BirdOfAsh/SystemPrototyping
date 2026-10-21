@@ -13,6 +13,8 @@ class_name DyamicDepthOfFieldCamera extends Camera3D
 ## The multiplier of distance it takes to go from no blur to full blur once it reaches
 ## the distance threshold. (0 -> 1)
 @export var blur_transition_ratio : float = 0.5
+## The distance in meters that blur starts to show for nearby objects.
+@export var blur_near_transition_distance : float = 0.5
 
 ## This is the camera's attributes which will for DDOF with be [CameraAttributesPractical].
 var cam_attributes : CameraAttributesPractical
@@ -38,9 +40,10 @@ func _process(_delta: float) -> void:
 		
 	focus_distance = distance_to_collision
 	cam_attributes.dof_blur_far_distance = focus_distance
-	cam_attributes.dof_blur_far_transition = focus_distance * blur_transition_ratio
-	cam_attributes.dof_blur_near_distance = focus_distance / blur_transition_ratio
-	cam_attributes.dof_blur_near_distance = 0.4
+	cam_attributes.dof_blur_far_transition = (focus_distance + 2) * blur_transition_ratio
+	cam_attributes.dof_blur_near_distance = focus_distance
+	cam_attributes.dof_blur_near_transition = (focus_distance - 2) * blur_transition_ratio
+
 
 ## Set up the camera attribute if it's not already assigned
 func set_camera_attribute() -> void:
