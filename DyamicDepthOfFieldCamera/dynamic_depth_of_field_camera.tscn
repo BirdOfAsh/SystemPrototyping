@@ -7,10 +7,15 @@ dof_blur_far_enabled = true
 dof_blur_near_enabled = true
 dof_blur_amount = 0.05
 
+[sub_resource type="Curve" id="Curve_nn233"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5060606, 1), 0.0, 0.0, 0, 0, Vector2(0.99696964, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [node name="DynamicDepthOfFieldCamera" type="Camera3D" unique_id=1730595217 node_paths=PackedStringArray("distance_ray")]
 attributes = SubResource("CameraAttributesPractical_nn233")
 script = ExtResource("1_nn233")
 distance_ray = NodePath("DistanceRay")
+blur_transition_curve = SubResource("Curve_nn233")
 
 [node name="DistanceRay" type="RayCast3D" parent="." unique_id=1788107338]
 unique_name_in_owner = true

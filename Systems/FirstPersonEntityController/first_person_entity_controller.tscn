@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://tfl8fm3k6g0h"]
+
+[ext_resource type="Script" uid="uid://cmy43bgf36uvv" path="res://Systems/FirstPersonEntityController/first_person_entity_controller.gd" id="1_2p54s"]
+[ext_resource type="Script" uid="uid://jabragni10eb" path="res://Systems/FirstPersonEntityController/StateMachine/BaseClasses/entity_state_machine.gd" id="3_ujxgp"]
+[ext_resource type="Script" uid="uid://ca6fijaiyxwnt" path="res://Systems/FirstPersonEntityController/StateMachine/States/falling_entity_state.gd" id="4_0jl8d"]
+[ext_resource type="Script" uid="uid://co6ke3c5cyosq" path="res://Systems/FirstPersonEntityController/StateMachine/States/idle_entity_state.gd" id="5_4f1bj"]
+[ext_resource type="Script" uid="uid://bcl8id8bj8x3m" path="res://Systems/FirstPersonEntityController/StateMachine/States/walking_entity_state.gd" id="6_fxfyj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+
+[node name="FirstPersonEntityController" type="CharacterBody3D" unique_id=1495724798]
+collision_layer = 2
+collision_mask = 6
+script = ExtResource("1_2p54s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2067619712]
+shape = SubResource("CapsuleShape3D_g4v7s")
+
+[node name="Head" type="Node3D" parent="." unique_id=37865752]
+unique_name_in_owner = true
+
+[node name="EntityStateMachine" type="Node" parent="." unique_id=1884200142 node_paths=PackedStringArray("entity", "states")]
+unique_name_in_owner = true
+script = ExtResource("3_ujxgp")
+entity = NodePath("..")
+states = [NodePath("FallingEntityState"), NodePath("IdleEntityState"), NodePath("WalkingEntityState")]
+
+[node name="FallingEntityState" type="Node" parent="EntityStateMachine" unique_id=1860390504]
+script = ExtResource("4_0jl8d")
+
+[node name="IdleEntityState" type="Node" parent="EntityStateMachine" unique_id=442353838]
+script = ExtResource("5_4f1bj")
+
+[node name="WalkingEntityState" type="Node" parent="EntityStateMachine" unique_id=729918782]
+script = ExtResource("6_fxfyj")

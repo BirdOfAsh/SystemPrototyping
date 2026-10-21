@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dq521yv540kc4"]
 
-[ext_resource type="PackedScene" uid="uid://clrsx6gv2par8" path="res://TestScenes/TestPlayer/test_character_body_3d.tscn" id="1_cvhhh"]
+[ext_resource type="PackedScene" uid="uid://do0myq6fv7yt8" path="res://Content/Player/player.tscn" id="1_0nwbt"]
+[ext_resource type="Script" uid="uid://bs7obevv0opd3" path="res://TestScenes/3d_test_scene.gd" id="1_s4kwc"]
+[ext_resource type="PackedScene" uid="uid://nekq4r2o4b1h" path="res://DyamicDepthOfFieldCamera/dynamic_depth_of_field_camera.tscn" id="2_s4kwc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0nwbt"]
 sky_top_color = Color(0.4419165, 0.43537632, 0.5649791, 1)
@@ -50,6 +52,7 @@ albedo_color = Color(0.33901036, 0.67417973, 0.42607498, 1)
 material = SubResource("StandardMaterial3D_gavsq")
 
 [node name="3DTestScene" type="Node3D" unique_id=1054109051]
+script = ExtResource("1_s4kwc")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1231319004]
 environment = SubResource("Environment_g4v7s")
@@ -91,8 +94,14 @@ shape = SubResource("BoxShape3D_cvhhh")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WorldObjects/GreenCube" unique_id=1137159064]
 mesh = SubResource("BoxMesh_82ios")
 
-[node name="CharacterBody3D" parent="." unique_id=640207907 instance=ExtResource("1_cvhhh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9427662, 0)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1490893086]
 transform = Transform3D(-0.8042758, -0.5942562, 0, 0.2879123, -0.38966507, 0.8747958, -0.5198528, 0.7035771, 0.48449185, 0, 50.36818, 0)
+
+[node name="Player" parent="." unique_id=1495724798 instance=ExtResource("1_0nwbt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3914839, 0)
+collision_layer = 1
+collision_mask = 1
+
+[node name="DynamicDepthOfFieldCamera" parent="Player/Head" parent_id_path=PackedInt32Array(1495724798, 37865752) index="0" unique_id=1730595217 instance=ExtResource("2_s4kwc")]
+
+[editable path="Player"]

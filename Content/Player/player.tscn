@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://do0myq6fv7yt8"]
+
+[ext_resource type="PackedScene" uid="uid://tfl8fm3k6g0h" path="res://Systems/FirstPersonEntityController/first_person_entity_controller.tscn" id="1_thq5r"]
+[ext_resource type="Script" uid="uid://doqr2g3d6wy3u" path="res://Content/Player/player.gd" id="2_kbsyd"]
+
+[node name="Player" unique_id=1495724798 instance=ExtResource("1_thq5r")]
+script = ExtResource("2_kbsyd")
