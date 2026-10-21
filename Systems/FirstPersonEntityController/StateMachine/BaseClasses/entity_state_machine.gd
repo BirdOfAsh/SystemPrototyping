@@ -5,7 +5,7 @@ class_name EntityStateMachine extends StateMachine
 
 func _ready() -> void:
 	if entity == null:
-		printerr("%s: No player object is set in export" % self.name)
+		printerr("%s: No entity object is set in export" % self.name)
 		return
 	
 	setup_states()

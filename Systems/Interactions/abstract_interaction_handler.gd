@@ -35,33 +35,33 @@ func _physics_process(_delta: float) -> void:
 		return
 	
 	# if hovering, check how long it was since we last handled a raycast collision
-	# if > threshold, player isnt hovering anymore
+	# if > threshold, entity isnt hovering anymore
 	if Time.get_ticks_msec() - raycast_last_handled_timestamp > HOVER_FADE_THESHOLD_MS:
 		is_hovering = false
 		fade_out_hover_effect()
 
 
-## Called by the players InteractionRaycast raycast
-func handle_raycast_collision(player : FirstPersonEntityController) -> void:
+## Called by the entity's InteractionRaycast raycast
+func handle_raycast_collision(entity : FirstPersonEntityController) -> void:
 	if !is_enabled:
 		return
-	# store time that we handled the raycast, later checked against later to check if the player is still hovering
+	# store time that we handled the raycast, later checked against later to check if the entity is still hovering
 	raycast_last_handled_timestamp = Time.get_ticks_msec()
-	# lock out interaction calls if player is currently interacting
+	# lock out interaction calls if entity is currently interacting
 	if is_interacting:
 		return
 	
 	# screen for correct input
 	if !is_correct_input_given():
-		# case: player is looking at interactable but not interacting
+		# case: entity is looking at interactable but not interacting
 		if is_hovering:
 			return
 		fade_in_hover_effect()
 		is_hovering = true
 		return
 	
-	# case: player is interacting!
-	do_interaction(player)
+	# case: entity is interacting!
+	do_interaction(entity)
 
 
 func enable() -> void:
