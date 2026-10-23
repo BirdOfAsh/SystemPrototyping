@@ -2,7 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://do0myq6fv7yt8" path="res://Content/Player/player.tscn" id="1_0nwbt"]
 [ext_resource type="Script" uid="uid://bs7obevv0opd3" path="res://TestScenes/3d_test_scene.gd" id="1_s4kwc"]
-[ext_resource type="PackedScene" uid="uid://nekq4r2o4b1h" path="res://DyamicDepthOfFieldCamera/dynamic_depth_of_field_camera.tscn" id="2_s4kwc"]
+[ext_resource type="Script" uid="uid://douffmnyd4f1o" path="res://PhysicsObject3D/RayPhysObj3D/ray_phys_obj_3d.gd" id="3_gavsq"]
+[ext_resource type="Script" uid="uid://dqpnj0ew2xu5c" path="res://PhysicsObject3D/physics_object_3d.gd" id="4_gavsq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0nwbt"]
 sky_top_color = Color(0.4419165, 0.43537632, 0.5649791, 1)
@@ -50,6 +51,13 @@ albedo_color = Color(0.33901036, 0.67417973, 0.42607498, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_82ios"]
 material = SubResource("StandardMaterial3D_gavsq")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
+radius = 0.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_g4v7s"]
+radius = 0.3
+height = 0.6
 
 [node name="3DTestScene" type="Node3D" unique_id=1054109051]
 script = ExtResource("1_s4kwc")
@@ -102,6 +110,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3914839, 0)
 collision_layer = 1
 collision_mask = 1
 
-[node name="DynamicDepthOfFieldCamera" parent="Player/Head" parent_id_path=PackedInt32Array(1495724798, 37865752) index="0" unique_id=1730595217 instance=ExtResource("2_s4kwc")]
+[node name="Camera3D" type="Camera3D" parent="Player/Head" parent_id_path=PackedInt32Array(1495724798, 37865752) index="0" unique_id=1345355930]
+
+[node name="RayPhysObj3D" type="RayCast3D" parent="Player/Head" parent_id_path=PackedInt32Array(1495724798, 37865752) index="1" unique_id=764733543]
+target_position = Vector3(0, 0, -3.155)
+script = ExtResource("3_gavsq")
+metadata/_custom_type_script = "uid://douffmnyd4f1o"
+
+[node name="TestPhysObj" type="RigidBody3D" parent="." unique_id=1929407411]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1237597, 1.2048957, 0)
+script = ExtResource("4_gavsq")
+pickable = true
+metadata/_custom_type_script = "uid://dqpnj0ew2xu5c"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestPhysObj" unique_id=1650362573]
+shape = SubResource("SphereShape3D_g4v7s")
+debug_color = Color(0.92939943, 0.0009966916, 0.97192067, 0.41960785)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TestPhysObj" unique_id=1606979003]
+mesh = SubResource("SphereMesh_g4v7s")
 
 [editable path="Player"]
