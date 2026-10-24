@@ -7,20 +7,24 @@ var picked : bool = false
 ## If the object is being hovered by a [RayPhysObj3D]
 var hovered : bool = false
 
+
 func _init(new_phys_obj : PhysicsObject3D) -> void:
 	super(new_phys_obj)
+	phys_obj.ray_entered.connect(_phys_obj_ray_entered)
+	phys_obj.ray_exited.connect(_phys_obj_ray_exited)
 	
-	phys_obj.ray_entered.connect(phys_obj_ray_entered)
 
 
-func phys_obj_ray_entered(ray : RayPhysObj3D) -> void:
+func _phys_obj_ray_entered(ray : RayPhysObj3D) -> void:
 	ray.request_pick_up.connect(pick_up)
 	hovered = true
+	print('hovering')
 
 
-func phys_obj_ray_exited(ray : RayPhysObj3D) -> void:
+func _phys_obj_ray_exited(ray : RayPhysObj3D) -> void:
 	ray.request_pick_up.disconnect(pick_up)
 	hovered = false
+	print('exit hovering')
 
 
 func pick_up() -> void:

@@ -11,6 +11,7 @@ signal ray_exited(ray : RayCast3D)
 
 @export var pickable : bool = false
 
+var object_components : Array[PhysObj3DComponent] = []
 
 func _ready() -> void:
 	make_components()
@@ -18,4 +19,4 @@ func _ready() -> void:
 
 func make_components() -> void:
 	if pickable:
-		PickablePhysObj3DComponent.new(self)
+		object_components.append(PickablePhysObj3DComponent.new(self))
