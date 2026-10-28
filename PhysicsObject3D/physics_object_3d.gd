@@ -8,15 +8,19 @@ signal ray_entered(ray : RayCast3D)
 @warning_ignore("unused_signal")
 signal ray_exited(ray : RayCast3D)
 
-
+@export var component_list : Array[PhysObj3DComponent]
 @export var pickable : bool = false
 
-var object_components : Array[PhysObj3DComponent] = []
 
 func _ready() -> void:
-	make_components()
+	call_component_setup()
 
 
-func make_components() -> void:
-	if pickable:
-		object_components.append(PickablePhysObj3DComponent.new(self))
+func call_component_setup() -> void:
+	for comp : PhysObj3DComponent in component_list:
+		comp.component_setup(self)
+
+
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	for comp : PhysObj3DComponent in component_list:
+		comp.integrate_forces(state)

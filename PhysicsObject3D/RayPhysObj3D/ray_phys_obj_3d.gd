@@ -9,7 +9,8 @@ var colliding_phys_obj : PhysicsObject3D = null
 
 
 func _physics_process(_delta: float) -> void:
-	check_for_phys_obj()
+	#check_for_phys_obj()
+	pass
 
 
 func check_for_phys_obj() -> void:
@@ -27,5 +28,3 @@ func check_for_phys_obj() -> void:
 	
 	# If colliding with new object, emit ray_entered on it
 	if colliding_phys_obj != null: colliding_phys_obj.ray_entered.emit(self)
-	
-	print(colliding_phys_obj)
