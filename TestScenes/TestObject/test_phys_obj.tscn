@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://ds87hfmmk2l14"]
+
+[ext_resource type="Script" uid="uid://dqpnj0ew2xu5c" path="res://PhysicsObject3D/physics_object_3d.gd" id="1_lr5bg"]
+[ext_resource type="Script" uid="uid://cmwf77s5ai3qf" path="res://PhysicsObject3D/pickable_phys_object_3d.gd" id="2_qwwob"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
+radius = 0.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_g4v7s"]
+radius = 0.3
+height = 0.6
+
+[node name="TestPhysObj" type="RigidBody3D" unique_id=1408231793]
+script = ExtResource("1_lr5bg")
+pickable = true
+metadata/_custom_type_script = "uid://dqpnj0ew2xu5c"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1274070880]
+shape = SubResource("SphereShape3D_g4v7s")
+debug_color = Color(0.92939943, 0.0009966916, 0.97192067, 0.41960785)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=778311442]
+mesh = SubResource("SphereMesh_g4v7s")
+
+[node name="PickablePhysObj3DComponent" type="Node" parent="." unique_id=769121979]
+script = ExtResource("2_qwwob")
+metadata/_custom_type_script = "uid://cmwf77s5ai3qf"

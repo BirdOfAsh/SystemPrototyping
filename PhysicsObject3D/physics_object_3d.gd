@@ -11,17 +11,18 @@ var component_dict : Dictionary[Script, PhysObj3DComponent]
 
 
 func _ready() -> void:
+	generate_component_dict()
 	call_component_setup()
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
-	for comp : PhysObj3DComponent in component_list:
+	for comp : PhysObj3DComponent in component_dict.values() as Array[PhysObj3DComponent]:
 		comp.integrate_forces(state)
 
 
 ## Calls the component_setup() function on all [PhysObj3DComponent]
 func call_component_setup() -> void:
-	for comp : PhysObj3DComponent in component_list:
+	for comp : PhysObj3DComponent in component_dict.values() as Array[PhysObj3DComponent]:
 		comp.component_setup(self)
 
 
@@ -33,13 +34,15 @@ func generate_component_dict() -> void:
 		var comp : PhysObj3DComponent = component_list[index]
 		# Check to see if the array entry was null
 		if comp == null:
-			push_warning("Missing component at index: " + str(index))
-		# Check to see if there is a component already set in the dict
+			push_warning("%s has a missing component at index: %s" % [self.name, index])
+		# Checks for duplicate components in the list
 		elif component_dict.has(comp.get_script()):
-			push_warning("")
+			push_warning("%s has a duplicate component of type %s at index %s and %s" % [self.name, (comp.get_script() as Script).get_global_name(), component_list.find(comp), index] )
 		else:
 			# Make the dictionary entry
 			component_dict.set(comp.get_script(), comp)
+	
+	print(component_dict)
 
 
 #TODO: Update this with dictionary
