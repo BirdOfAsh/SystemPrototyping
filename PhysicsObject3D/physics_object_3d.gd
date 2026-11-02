@@ -48,3 +48,9 @@ func generate_component_dict() -> void:
 ## global class [param script] as a parameter.
 func has_component(script : Script) -> bool:
 	return component_dict.has(script)
+
+
+## Returns the [PhysObj3DComponent] object given a global class [param script]. [br]
+## Returns null if there is no [PhysObj3DComponent] for the [param script].
+func get_component(script : Script) -> PhysObj3DComponent:
+	return component_dict[script]
