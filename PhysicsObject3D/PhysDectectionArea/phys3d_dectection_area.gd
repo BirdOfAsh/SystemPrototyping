@@ -18,7 +18,7 @@ func _phys_obj_entered(body : Node3D) -> void:
 	# Should never throw an error since this function only runs when a [PhysicsObject3D enters
 	colliding_phys_obj = get_closest_phys_obj()
 	
-	#TODO: Figure out what to do here
+	
 	if phys_obj.has_component(PickablePhysObj3DComponent):
 		var pickable_comp : PickablePhysObj3DComponent = (phys_obj.get_component(PickablePhysObj3DComponent) as PickablePhysObj3DComponent)
 		pickable_comp.pick_up()

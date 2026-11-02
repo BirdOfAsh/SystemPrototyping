@@ -12,6 +12,7 @@ func component_setup(new_phys_obj : PhysicsObject3D) -> void:
 
 func integrate_forces(_state: PhysicsDirectBodyState3D) -> void:
 	if picked:
+		#TODO: Make a function to move the object to a point and how to get point
 		pass
 
 
