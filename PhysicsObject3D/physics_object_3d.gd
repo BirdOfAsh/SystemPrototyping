@@ -1,12 +1,13 @@
 ## A 3D physcial object class which extends off of [RigidBody3D]. [br]
-## The purpose of this class is to act as a base for all physical objects and use
-## components to further describe additional properties.
+## This class stores a dictionary of all parameters and delegates the
+## physics state to them.
 class_name PhysicsObject3D extends RigidBody3D
 
 
 @export var component_list : Array[PhysObj3DComponent]
 @export var pickable : bool = false
 
+## Dictionary where all components are stored, accessable by thier global class
 var component_dict : Dictionary[Script, PhysObj3DComponent]
 
 
@@ -37,17 +38,13 @@ func generate_component_dict() -> void:
 			push_warning("%s has a missing component at index: %s" % [self.name, index])
 		# Checks for duplicate components in the list
 		elif component_dict.has(comp.get_script()):
-			push_warning("%s has a duplicate component of type %s at index %s and %s" % [self.name, (comp.get_script() as Script).get_global_name(), component_list.find(comp), index] )
+			push_warning("%s has a duplicate component of type %s at index %s and %s" % [self.name, comp.get_script().get_global_name(), component_list.find(comp), index] )
+		# Make the dictionary entry is there we no errors
 		else:
-			# Make the dictionary entry
 			component_dict.set(comp.get_script(), comp)
-	
-	print(component_dict)
 
 
-#TODO: Update this with dictionary
+## Returns if this object has a certain component on it by passing in the 
+## global class [param script] as a parameter.
 func has_component(script : Script) -> bool:
-	for comp in component_list:
-		if is_instance_of(comp, script):
-			return true
-	return false
+	return component_dict.has(script)

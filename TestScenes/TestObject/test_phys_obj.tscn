@@ -10,10 +10,15 @@ radius = 0.3
 radius = 0.3
 height = 0.6
 
-[node name="TestPhysObj" type="RigidBody3D" unique_id=1408231793]
+[node name="TestPhysObj" type="RigidBody3D" unique_id=1408231793 node_paths=PackedStringArray("component_list")]
 script = ExtResource("1_lr5bg")
+component_list = [NodePath("PickablePhysObj3DComponent")]
 pickable = true
 metadata/_custom_type_script = "uid://dqpnj0ew2xu5c"
+
+[node name="PickablePhysObj3DComponent" type="Node" parent="." unique_id=769121979]
+script = ExtResource("2_qwwob")
+metadata/_custom_type_script = "uid://cmwf77s5ai3qf"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1274070880]
 shape = SubResource("SphereShape3D_g4v7s")
@@ -21,7 +26,3 @@ debug_color = Color(0.92939943, 0.0009966916, 0.97192067, 0.41960785)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=778311442]
 mesh = SubResource("SphereMesh_g4v7s")
-
-[node name="PickablePhysObj3DComponent" type="Node" parent="." unique_id=769121979]
-script = ExtResource("2_qwwob")
-metadata/_custom_type_script = "uid://cmwf77s5ai3qf"
