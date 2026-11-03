@@ -13,6 +13,7 @@ var component_dict : Dictionary[Script, PhysObj3DComponent]
 func _ready() -> void:
 	generate_component_dict()
 	call_component_setup()
+	set_collision_info()
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:

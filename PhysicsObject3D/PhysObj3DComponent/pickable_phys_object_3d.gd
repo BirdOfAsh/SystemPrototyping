@@ -13,8 +13,10 @@ var picked : bool = false:
 	set(new_picked):
 		picked = new_picked
 		_on_picked_value_changed.emit(picked)
+		print('picked' + str(picked))
 
 #endregion
+
 
 func component_setup(new_phys_obj : PhysicsObject3D) -> void:
 	super(new_phys_obj)
