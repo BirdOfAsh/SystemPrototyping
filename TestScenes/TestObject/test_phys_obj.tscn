@@ -13,7 +13,6 @@ height = 0.6
 [node name="TestPhysObj" type="RigidBody3D" unique_id=1408231793 node_paths=PackedStringArray("component_list")]
 script = ExtResource("1_lr5bg")
 component_list = [NodePath("PickablePhysObj3DComponent")]
-pickable = true
 metadata/_custom_type_script = "uid://dqpnj0ew2xu5c"
 
 [node name="PickablePhysObj3DComponent" type="Node" parent="." unique_id=769121979]

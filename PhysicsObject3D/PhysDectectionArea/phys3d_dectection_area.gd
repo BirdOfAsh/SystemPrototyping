@@ -1,4 +1,4 @@
-class_name PhysDectionArea3D extends Area3D
+class_name PhysDetectionArea3D extends Area3D
 
 
 var colliding_phys_obj : PhysicsObject3D
@@ -9,11 +9,18 @@ func _ready() -> void:
 	body_exited.connect(_phys_obj_exited)
 
 
+func set_collision_info() -> void:
+	self.collision_layer = 0
+	self.collision_mask = 0
+	
+	self.set_collision_mask_value(PickablePhysObj3DComponent.PHYS_PICKABLE_LAYER, true)
+
+
 ## Chcek for if the area entered a [PhysicsObject3D] and update [member colliding_phys_obj] if so.
 func _phys_obj_entered(body : Node3D) -> void:
 	var phys_obj : PhysicsObject3D = body as PhysicsObject3D
 	# Check if the body is a PhysicsObject3D
-	if phys_obj== null: return
+	if phys_obj == null: return
 	
 	# Should never throw an error since this function only runs when a [PhysicsObject3D enters
 	colliding_phys_obj = get_closest_phys_obj()
