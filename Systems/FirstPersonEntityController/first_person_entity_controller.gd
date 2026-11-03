@@ -9,7 +9,6 @@ class_name FirstPersonEntityController extends CharacterBody3D
 @export_category("Disable toggles")
 @export var look_enabled : bool = true
 @export var movement_enabled : bool = true
-@export var interaction_enabled : bool = true
 
 ## Rotation helper to make head rotation not break :)
 @onready var head: Node3D = %Head

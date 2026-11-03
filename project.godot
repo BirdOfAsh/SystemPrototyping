@@ -30,7 +30,10 @@ window/stretch/mode="canvas_items"
 folder_colors={
 "res://Addons/": "gray",
 "res://Content/": "yellow",
-"res://Systems/": "orange"
+"res://Systems/": "orange",
+"res://Systems/FirstPersonEntityController/": "pink",
+"res://Systems/FirstPersonEntityController/StateMachine/": "gray",
+"res://Systems/Interactions/": "yellow"
 }
 
 [gui]

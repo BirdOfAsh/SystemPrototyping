@@ -11,7 +11,7 @@ func check_for_transition_criteria() -> void:
 	if !entity.is_on_floor():
 		return
 	
-	var input_dir := Input.get_vector("left", "right", "forward", "back")
+	var input_dir : Vector2 = Input.get_vector("left", "right", "forward", "back")
 	
 	if input_dir:
 		state_machine.transition_to(WalkingEntityState)

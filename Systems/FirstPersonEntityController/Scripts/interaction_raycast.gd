@@ -1,31 +1,43 @@
 class_name InteractionRaycast extends RayCast3D
 
-@export var first_person_entity_controller : FirstPersonEntityController
+const INTERACTION_LAYER : int = 4
 
 signal colliding_with_interactable
+
+#region listenable properties
+signal is_interaction_enabled_value_changed(value : bool)
+
+var is_interaction_enabled : bool = true:
+	set(value):
+		is_interaction_enabled = value
+		is_interaction_enabled_value_changed.emit(is_interaction_enabled)
+#endregion
+
+
+func _init() -> void:
+	# clear all default collision masks
+	self.collision_mask = 0
+	# enable ONLY the value defined as the designated INTERACTION_LAYER
+	self.set_collision_mask_value(INTERACTION_LAYER, true)
+	# make sure we can collide with areas!
+	self.collide_with_areas = true
+
 
 func _physics_process(_delta: float) -> void:
 	self.force_raycast_update()
 	
-	if !is_colliding() || !first_person_entity_controller.interaction_enabled:
+	if !is_interaction_enabled:
+		return
+	if !is_colliding():
 		return
 	
-	var collider : Object = get_collider()
+	var interaction_area : AbstractInteractionArea = get_collider() as AbstractInteractionArea
 	
-	if collider is not Node:
-		return
-	
-	# grab group name from interaction handler so its ALWAYS checking against the right val
-	if !(collider as Node).is_in_group(AbstractInteractionHandler.get_group_name()):
-		printerr("%s: Entity's interaction raycast is colliding with %s which is not in the 'Interactable' group" % [self.name, collider])
-		return
-	
-	if "interaction_handler" not in collider:
-		printerr("%s: Entity's interaction raycast is colliding with %s which does not have a interaction_handler" % [self.name, collider])
-		return
-	
-	if (collider.interaction_handler as AbstractInteractionHandler).is_enabled == false:
+	if interaction_area == null:
+		# TODO: does this actually work?  ̄\_(ツ)_/ ̄
+		print_debug()
+		printerr("%s: Entity's interaction raycast is colliding with %s which is not derived from AbstractInteractionArea" % [self.name, get_collider()])
 		return
 	
 	colliding_with_interactable.emit()
-	(collider.interaction_handler as AbstractInteractionHandler).handle_raycast_collision(first_person_entity_controller)
+	interaction_area.handle_raycast_collision(self)

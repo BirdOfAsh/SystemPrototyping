@@ -1,4 +1,4 @@
-@abstract class_name AbstractHoldInteractionHandler extends AbstractInteractionHandler
+@abstract class_name AbstractHoldInteractionHandler extends AbstractInteractionArea
 
 var hold_threshold_ms : float = 1500
 var is_holding : bool = false

@@ -2,6 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://tfl8fm3k6g0h" path="res://Systems/FirstPersonEntityController/first_person_entity_controller.tscn" id="1_thq5r"]
 [ext_resource type="Script" uid="uid://doqr2g3d6wy3u" path="res://Content/Player/player.gd" id="2_kbsyd"]
+[ext_resource type="Script" uid="uid://v7cw3raovs7" path="res://Systems/FirstPersonEntityController/Scripts/interaction_raycast.gd" id="3_x8iml"]
 
 [node name="Player" unique_id=1495724798 instance=ExtResource("1_thq5r")]
 script = ExtResource("2_kbsyd")
+
+[node name="InteractionRaycast" type="RayCast3D" parent="Head" parent_id_path=PackedInt32Array(37865752) index="0" unique_id=1479090071]
+unique_name_in_owner = true
+script = ExtResource("3_x8iml")
+metadata/_custom_type_script = "uid://v7cw3raovs7"
