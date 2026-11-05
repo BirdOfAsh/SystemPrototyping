@@ -107,8 +107,9 @@ collision_mask = 1
 
 [node name="RayPhysObj3D" parent="Player/Head" parent_id_path=PackedInt32Array(1495724798, 37865752) index="1" unique_id=560712455 instance=ExtResource("3_gavsq")]
 
-[node name="TestPhysObj" parent="." unique_id=1408231793 instance=ExtResource("4_gavsq")]
+[node name="TestPhysObj" parent="." unique_id=1408231793 node_paths=PackedStringArray("component_list") instance=ExtResource("4_gavsq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1237597, 1.2048957, 0)
+component_list = [NodePath("PickablePhysObj3DComponent"), null, NodePath("PickablePhysObj3DComponent")]
 
 [editable path="Player"]
 [editable path="Player/Head/RayPhysObj3D"]

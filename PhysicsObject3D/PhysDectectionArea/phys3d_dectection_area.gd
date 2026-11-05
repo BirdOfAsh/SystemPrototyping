@@ -1,8 +1,17 @@
 class_name PhysDetectionArea3D extends Area3D
 
-@export var phys_obj_picker : PhysObjPicker
 
-var colliding_phys_obj : PhysicsObject3D
+#region Listenable Properties
+signal _on_colliding_phys_obj_value_changed(value : PhysicsObject3D)
+
+## If the object is being pickup up
+var colliding_phys_obj : PhysicsObject3D:
+	set(new_collision):
+		colliding_phys_obj = new_collision
+		_on_colliding_phys_obj_value_changed.emit(colliding_phys_obj)
+
+#endregion
+
 
 
 func _ready() -> void:
@@ -11,7 +20,6 @@ func _ready() -> void:
 	
 	
 	set_collision_info()
-	obj_picker_setup()
 
 
 func set_collision_info() -> void:
@@ -35,8 +43,6 @@ func _phys_obj_entered(body : Node3D) -> void:
 ## and if so then clear it.
 func _phys_obj_exited(body : Node3D) -> void:
 	if body == colliding_phys_obj:
-		var pickable_comp : PickablePhysObj3DComponent = (colliding_phys_obj.get_component(PickablePhysObj3DComponent) as PickablePhysObj3DComponent)
-		pickable_comp.put_down()
 		colliding_phys_obj = null
 
 
@@ -63,13 +69,13 @@ func get_closest_phys_obj() -> PhysicsObject3D:
 	return closest_body
 
 
-func call_pick_up() -> void:
-	var pickable_comp : PickablePhysObj3DComponent = (colliding_phys_obj.get_component(PickablePhysObj3DComponent) as PickablePhysObj3DComponent)
-	pickable_comp.pick_up()
-
-
-func obj_picker_setup() -> void:
-	if phys_obj_picker:
-		phys_obj_picker.try_pick_up.connect(call_pick_up)
-	else:
-		push_warning("No object picker on %s" % [self.name])
+#func call_pick_up() -> void:
+	#var pickable_comp : PickablePhysObj3DComponent = (colliding_phys_obj.get_component(PickablePhysObj3DComponent) as PickablePhysObj3DComponent)
+	#pickable_comp.pick_up()
+#
+#
+#func obj_picker_setup() -> void:
+	#if phys_obj_picker:
+		#phys_obj_picker.try_pick_up.connect(call_pick_up)
+	#else:
+		#push_warning("No object picker on %s" % [self.name])

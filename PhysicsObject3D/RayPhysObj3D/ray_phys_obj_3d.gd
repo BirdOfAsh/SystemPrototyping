@@ -1,7 +1,7 @@
 class_name RayPhysObj3D extends RayCast3D
 
 @onready var phys_detection_area_3d: PhysDetectionArea3D = %PhysDetectionArea3D as PhysDetectionArea3D
-@onready var phys_obj_picker: PhysObjPicker = %PhysObjPicker as PhysObjPicker
+@onready var phys_obj_picker: PhysObjPullPoint = %PhysObjPicker as PhysObjPullPoint
 
 @export var max_ray_length : int = 2
 @export var min_ray_length : int = 1

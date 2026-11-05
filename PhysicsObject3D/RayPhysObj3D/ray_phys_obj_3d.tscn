@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://douffmnyd4f1o" path="res://PhysicsObject3D/RayPhysObj3D/ray_phys_obj_3d.gd" id="1_uomm8"]
 [ext_resource type="Script" uid="uid://fq2oe4p4utsd" path="res://PhysicsObject3D/PhysDectectionArea/phys3d_dectection_area.gd" id="2_ciegj"]
-[ext_resource type="Script" uid="uid://ct5hlyrkwyeoq" path="res://PhysicsObject3D/PhyObjPicker/phys_obj_picker.gd" id="3_rglfk"]
+[ext_resource type="Script" uid="uid://ct5hlyrkwyeoq" path="res://PhysicsObject3D/PhyObjPullPosition/phys_obj_pull_position.gd" id="3_rglfk"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
 radius = 0.1
@@ -12,18 +12,17 @@ target_position = Vector3(0, 0, -5)
 script = ExtResource("1_uomm8")
 metadata/_custom_type_script = "uid://douffmnyd4f1o"
 
-[node name="PhysDetectionArea3D" type="Area3D" parent="." unique_id=1489480910 node_paths=PackedStringArray("phys_obj_picker")]
+[node name="PhysDetectionArea3D" type="Area3D" parent="." unique_id=1489480910]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 script = ExtResource("2_ciegj")
-phys_obj_picker = NodePath("../PhysObjPicker")
 metadata/_custom_type_script = "uid://fq2oe4p4utsd"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PhysDetectionArea3D" unique_id=1973985158]
 shape = SubResource("SphereShape3D_g4v7s")
 
-[node name="PhysObjPicker" type="Marker3D" parent="." unique_id=1043052250]
+[node name="PhysObjPicker" type="Marker3D" parent="." unique_id=1043052250 node_paths=PackedStringArray("detect_area")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 script = ExtResource("3_rglfk")
-metadata/_custom_type_script = "uid://ct5hlyrkwyeoq"
+detect_area = NodePath("../PhysDetectionArea3D")
