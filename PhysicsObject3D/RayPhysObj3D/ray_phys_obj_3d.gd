@@ -1,7 +1,6 @@
 class_name RayPhysObj3D extends RayCast3D
 
-@onready var phys_detection_area_3d: PhysDetectionArea3D = %PhysDetectionArea3D as PhysDetectionArea3D
-@onready var phys_obj_picker: PhysObjPullPoint = %PhysObjPicker as PhysObjPullPoint
+@onready var physics_picking_system: PhysicsPickingSystem = %PhysicsPickingSystem as PhysicsPickingSystem
 
 @export var max_ray_length : int = 2
 @export var min_ray_length : int = 1
@@ -18,5 +17,4 @@ func update_ray_endpoint_position(collision_position : Vector3) -> void:
 	target_position = new_target_position
 
 	
-	phys_detection_area_3d.global_position = to_global(target_position)
-	phys_obj_picker.global_position = to_global(target_position)
+	physics_picking_system.global_position = to_global(target_position)

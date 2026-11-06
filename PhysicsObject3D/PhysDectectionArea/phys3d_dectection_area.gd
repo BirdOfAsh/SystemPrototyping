@@ -4,14 +4,14 @@ class_name PhysDetectionArea3D extends Area3D
 #region Listenable Properties
 signal _on_colliding_phys_obj_value_changed(value : PhysicsObject3D)
 
-## If the object is being pickup up
+## The closest colliding [PhysicsObject3D] which contains a [PickablePhysObj3DComponent]
 var colliding_phys_obj : PhysicsObject3D:
 	set(new_collision):
+		if colliding_phys_obj == new_collision: return
 		colliding_phys_obj = new_collision
 		_on_colliding_phys_obj_value_changed.emit(colliding_phys_obj)
 
 #endregion
-
 
 
 func _ready() -> void:
@@ -34,15 +34,25 @@ func _phys_obj_entered(body : Node3D) -> void:
 	var phys_obj : PhysicsObject3D = body as PhysicsObject3D
 	# Only continue if there is a PhysicsObject3D and it has a PickablePhysObj3DComponent
 	if phys_obj == null or phys_obj.has_component(PickablePhysObj3DComponent) == false: return
+	# Only update colliding_phys_obj if the value differs, so it won't run the signal unnesesarily
+	var closest_phys_body : PhysicsObject3D = get_closest_phys_obj()
+	if colliding_phys_obj != get_closest_phys_obj():
+		colliding_phys_obj = closest_phys_body
 	
-	# Should never throw an error since this function only runs when a [PhysicsObject3D enters
-	colliding_phys_obj = get_closest_phys_obj()
 
 
-## Check if the body that jusst exited is the currently stored [member colliding_phys_obj],
-## and if so then clear it.
+## Checks if the area exited is the stored [member colliding_phys_obj] updates the 
+## value with the next closest or clears it.
 func _phys_obj_exited(body : Node3D) -> void:
-	if body == colliding_phys_obj:
+	# Ignore if not the current colliding_phys_obj
+	if body != colliding_phys_obj: return
+	
+	# Check for any other phys obj and pick the closest
+	# If there are none, then clear it
+	var next_closest_obj : PhysicsObject3D = get_closest_phys_obj()
+	if next_closest_obj != null:
+		colliding_phys_obj = next_closest_obj
+	else:
 		colliding_phys_obj = null
 
 
@@ -54,7 +64,6 @@ func get_closest_phys_obj() -> PhysicsObject3D:
 	var overlapping_bodies : Array[Node3D] = get_overlapping_bodies()
 	
 	if overlapping_bodies.is_empty():
-		push_warning("%s is checking for the closest object but has none" % [self.name])
 		return null
 	
 	for body in overlapping_bodies:
@@ -67,15 +76,3 @@ func get_closest_phys_obj() -> PhysicsObject3D:
 			closest_body = body as PhysicsObject3D
 	
 	return closest_body
-
-
-#func call_pick_up() -> void:
-	#var pickable_comp : PickablePhysObj3DComponent = (colliding_phys_obj.get_component(PickablePhysObj3DComponent) as PickablePhysObj3DComponent)
-	#pickable_comp.pick_up()
-#
-#
-#func obj_picker_setup() -> void:
-	#if phys_obj_picker:
-		#phys_obj_picker.try_pick_up.connect(call_pick_up)
-	#else:
-		#push_warning("No object picker on %s" % [self.name])
