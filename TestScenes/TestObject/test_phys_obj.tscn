@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ds87hfmmk2l14"]
 
 [ext_resource type="Script" uid="uid://dqpnj0ew2xu5c" path="res://PhysicsObject3D/physics_object_3d.gd" id="1_lr5bg"]
-[ext_resource type="Script" uid="uid://cmwf77s5ai3qf" path="res://PhysicsObject3D/PhysObj3DComponent/pickable_phys_object_3d.gd" id="2_qwwob"]
+[ext_resource type="Script" uid="uid://cmwf77s5ai3qf" path="res://PhysicsObject3D/PhysObj3DComponent/pickable_phys_obj_3d_comp.gd" id="2_qwwob"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
 radius = 0.3
