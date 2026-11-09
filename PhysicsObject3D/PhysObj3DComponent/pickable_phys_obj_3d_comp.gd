@@ -57,7 +57,7 @@ func apply_force_towards_point(state : PhysicsDirectBodyState3D) -> void:
 	
 	# Omega is the natural angular frequency, how fast the spring would oscillate
 	#(in radians per second) if there were no damping at all.
-	var omega : float = TAU * 5 # <- change this for how snappy it is
+	var omega : float = TAU * 3 # <- change this for how snappy it is
 	# How many newtons of pull you get per meter of error
 	var spring_stiffness : float = phys_obj.mass  * omega * omega
 	# How many newtons of braking you get per m/s of velocity error.
@@ -88,7 +88,6 @@ func put_down() -> void:
 
 func set_target_marker(new_target_marker : Marker3D) -> void:
 	target_point = new_target_marker
-	pass
 
 
 func calc_target_velocity(new_target_position : Vector3, old_target_position : Vector3, delta : float) -> void:

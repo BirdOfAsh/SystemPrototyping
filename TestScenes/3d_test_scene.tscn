@@ -46,6 +46,8 @@ albedo_color = Color(0.3452798, 0.6328915, 0.75803524, 1)
 material = SubResource("StandardMaterial3D_0nwbt")
 size = Vector3(1, 1, 2)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_gavsq"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gavsq"]
 albedo_color = Color(0.33901036, 0.67417973, 0.42607498, 1)
 
@@ -90,7 +92,7 @@ mesh = SubResource("BoxMesh_s4kwc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1422498, 0.49707866, -3.9549685)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldObjects/GreenCube" unique_id=287917178]
-shape = SubResource("BoxShape3D_cvhhh")
+shape = SubResource("BoxShape3D_gavsq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WorldObjects/GreenCube" unique_id=1137159064]
 mesh = SubResource("BoxMesh_82ios")
