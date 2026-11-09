@@ -5,7 +5,6 @@ class_name PhysicsObject3D extends RigidBody3D
 
 
 @export var component_list : Array[PhysObj3DComponent]
-@export var pickable : bool = false
 
 ## Dictionary where all components are stored, accessable by thier global class
 var component_dict : Dictionary[Script, PhysObj3DComponent]
@@ -14,11 +13,16 @@ var component_dict : Dictionary[Script, PhysObj3DComponent]
 func _ready() -> void:
 	generate_component_dict()
 	call_component_setup()
+	set_collision_info()
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	for comp : PhysObj3DComponent in component_dict.values() as Array[PhysObj3DComponent]:
 		comp.integrate_forces(state)
+
+
+func set_collision_info() -> void:
+	self.set_collision_layer_value(PickablePhysObj3DComponent.PHYS_PICKABLE_LAYER, true)
 
 
 ## Calls the component_setup() function on all [PhysObj3DComponent]

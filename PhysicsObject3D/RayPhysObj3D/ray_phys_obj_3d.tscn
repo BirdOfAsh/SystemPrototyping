@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://y0rr75najo88"]
+
+[ext_resource type="Script" uid="uid://douffmnyd4f1o" path="res://PhysicsObject3D/RayPhysObj3D/ray_phys_obj_3d.gd" id="1_uomm8"]
+[ext_resource type="PackedScene" uid="uid://btf0p7at1yo6d" path="res://PhysicsObject3D/PhysicsPickingSystem/physics_picking_system.tscn" id="2_ciegj"]
+
+[node name="RayPhysObj3D" type="RayCast3D" unique_id=560712455]
+target_position = Vector3(0, 0, -5)
+script = ExtResource("1_uomm8")
+metadata/_custom_type_script = "uid://douffmnyd4f1o"
+
+[node name="PhysicsPickingSystem" parent="." unique_id=565155757 instance=ExtResource("2_ciegj")]
+unique_name_in_owner = true

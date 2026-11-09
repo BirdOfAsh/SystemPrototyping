@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://btf0p7at1yo6d"]
+
+[ext_resource type="Script" uid="uid://cyqw1joxw6wi1" path="res://PhysicsObject3D/PhysicsPickingSystem/physics_picking_system.gd" id="1_nb0sh"]
+[ext_resource type="Script" uid="uid://fq2oe4p4utsd" path="res://PhysicsObject3D/PhysDectectionArea/phys3d_dectection_area.gd" id="2_0vucx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nb0sh"]
+radius = 0.1
+
+[node name="PhysicsPickingSystem" type="Node3D" unique_id=565155757]
+script = ExtResource("1_nb0sh")
+metadata/_custom_type_script = "uid://cyqw1joxw6wi1"
+
+[node name="PhysDetectionArea3D" type="Area3D" parent="." unique_id=2016408995]
+unique_name_in_owner = true
+script = ExtResource("2_0vucx")
+metadata/_custom_type_script = "uid://fq2oe4p4utsd"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysDetectionArea3D" unique_id=944628937]
+shape = SubResource("SphereShape3D_nb0sh")
+
+[node name="PullPosition" type="Marker3D" parent="." unique_id=1817268599]
+unique_name_in_owner = true
