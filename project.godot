@@ -33,7 +33,8 @@ folder_colors={
 "res://Systems/": "orange",
 "res://Systems/FirstPersonEntityController/": "pink",
 "res://Systems/FirstPersonEntityController/StateMachine/": "gray",
-"res://Systems/Interactions/": "yellow"
+"res://Systems/Interactions/": "yellow",
+"res://Systems/Interactions/Abstracts/": "gray"
 }
 
 [gui]

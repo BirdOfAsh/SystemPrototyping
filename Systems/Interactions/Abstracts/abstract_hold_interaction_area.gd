@@ -4,7 +4,6 @@ var hold_threshold_ms : float = 1500
 var is_holding : bool = false
 var hold_start_timestamp : float = INF
 
-
 @abstract func is_correct_input_just_pressed() -> bool
 
 @abstract func is_correct_input_held() -> bool

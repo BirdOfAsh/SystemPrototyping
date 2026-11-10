@@ -34,9 +34,7 @@ func _physics_process(_delta: float) -> void:
 	var interaction_area : AbstractInteractionArea = get_collider() as AbstractInteractionArea
 	
 	if interaction_area == null:
-		# TODO: does this actually work?  ̄\_(ツ)_/ ̄
-		print_debug()
-		printerr("%s: Entity's interaction raycast is colliding with %s which is not derived from AbstractInteractionArea" % [self.name, get_collider()])
+		Utils.trace_error("%s: Entity's interaction raycast is colliding with %s which is not derived from AbstractInteractionArea" % [self.name, get_collider()])
 		return
 	
 	colliding_with_interactable.emit()
